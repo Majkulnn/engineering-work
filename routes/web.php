@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\LoginController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,4 +23,7 @@ Route::get("/", function () {
         "laravelVersion" => Application::VERSION,
         "phpVersion" => PHP_VERSION,
     ]);
-});
+})->name("home");
+
+Route::get("/login", fn() => Inertia::render("Login"));
+Route::post("/login", [LoginController::class, "store"])->name("login.post");
