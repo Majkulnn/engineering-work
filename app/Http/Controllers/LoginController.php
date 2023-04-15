@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -22,6 +23,15 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
+        if (auth()->user()->role === Role::Employee) {
+            return redirect()->route("employee.dashboard");
+        }
+        if (auth()->user()->role === Role::Manager) {
+            return redirect()->route("manager.dashboard");
+        }
+        if (auth()->user()->role === Role::Administrator) {
+            return redirect()->route("admin.dashboard");
+        }
         return redirect()->route("home");
     }
 }
