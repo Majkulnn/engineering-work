@@ -7,17 +7,17 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\FeatureTestCase;
 use Tests\TestCase;
 
-class AuthenticationTest extends TestCase
+class AuthenticationTest extends FeatureTestCase
 {
     use DatabaseMigrations;
 
-    public function testLoginScreenCanBeRendered(): void
+    public function testGuestIsRedirected(): void
     {
-        $response = $this->get("/login");
-
-        $response->assertStatus(200);
+        $this->get("/")
+            ->assertRedirect();
     }
 
     public function testEmployeeCanAuthenticateUsingTheLoginScreen(): void
