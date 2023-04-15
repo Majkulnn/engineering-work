@@ -6,21 +6,20 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\FeatureTestCase;
 
-class AuthenticationTest extends TestCase
+class AuthenticationTest extends FeatureTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
-    public function testLoginScreenCanBeRendered(): void
+    public function testGuestIsRedirected(): void
     {
-        $response = $this->get("/login");
-
-        $response->assertStatus(200);
+        $this->get("/")
+            ->assertRedirect();
     }
 
-    public function testUsersCanAuthenticateUsingTheLoginScreen(): void
+    public function testEmployeeCanAuthenticateUsingTheLoginScreen(): void
     {
         $user = User::factory()->create();
 
@@ -30,7 +29,7 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(RouteServiceProvider::Employee);
     }
 
     public function testUsersCanNotAuthenticateWithInvalidPassword(): void
@@ -41,6 +40,20 @@ class AuthenticationTest extends TestCase
             "email" => $user->email,
             "password" => "wrong-password",
         ]);
+
+        $this->assertGuest();
+    }
+
+    public function testUserCanLogout(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $this->assertAuthenticated();
+
+        $this->post("/logout")
+            ->assertRedirect();
 
         $this->assertGuest();
     }
