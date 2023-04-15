@@ -20,7 +20,7 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testUsersCanAuthenticateUsingTheLoginScreen(): void
+    public function testEmployeeCanAuthenticateUsingTheLoginScreen(): void
     {
         $user = User::factory()->create();
 
@@ -30,7 +30,7 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(RouteServiceProvider::Employee);
     }
 
     public function testUsersCanNotAuthenticateWithInvalidPassword(): void
