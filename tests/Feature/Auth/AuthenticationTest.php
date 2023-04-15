@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\FeatureTestCase;
-use Tests\TestCase;
 
 class AuthenticationTest extends FeatureTestCase
 {
