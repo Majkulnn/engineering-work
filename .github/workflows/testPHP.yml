@@ -10,6 +10,16 @@ jobs:
   laravel-tests:
 
    runs-on: ubuntu-20.04
+   services:
+     pgsql:
+       image: postgres:13
+       env:
+         POSTGRES_DB: koala
+         POSTGRES_USER: koala
+         POSTGRES_PASSWORD: password
+         PGPASSWORD: password
+       ports:
+         - 5432:5432
    steps:
       - uses: actions/checkout@v2
 
