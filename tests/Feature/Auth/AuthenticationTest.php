@@ -6,12 +6,14 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     public function testLoginScreenCanBeRendered(): void
     {
@@ -41,6 +43,20 @@ class AuthenticationTest extends TestCase
             "email" => $user->email,
             "password" => "wrong-password",
         ]);
+
+        $this->assertGuest();
+    }
+
+    public function testUserCanLogout(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $this->assertAuthenticated();
+
+        $this->post("/logout")
+            ->assertRedirect();
 
         $this->assertGuest();
     }
