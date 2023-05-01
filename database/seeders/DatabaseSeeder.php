@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Enums\EmploymentForm;
 use App\Enums\Role;
+use App\Models\Profile;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,20 +19,40 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
+        User::factory([
             "email" => "admin@example.com",
             "password" => Hash::make("administrator"),
             "role" => Role::Administrator,
-        ]);
-        User::factory()->create([
+        ])->hasProfile([
+            "first_name" => 'Admin',
+            "last_name" => 'Admin',
+            "position" => 'IT Specialist',
+            "employment_form" => EmploymentForm::EmploymentContract,
+            "employment_date" => today()
+        ])->create();
+
+        User::factory([
             "email" => "JohnDoe@example.com",
             "password" => Hash::make("employee"),
             "role" => Role::Employee,
-        ]);
-        User::factory()->create([
+        ])->hasProfile([
+            "first_name" => 'John',
+            "last_name" => 'Doe',
+            "position" => 'Manager',
+            "employment_form" => EmploymentForm::EmploymentContract,
+            "employment_date" => today()
+        ])->create();
+
+        User::factory([
             "email" => "JonDeer@example.com",
             "password" => Hash::make("manager"),
             "role" => Role::Manager,
-        ]);
+        ])->hasProfile([
+            "first_name" => 'Jon',
+            "last_name" => 'Deer',
+            "position" => 'Social Worker',
+            "employment_form" => EmploymentForm::MandateContract,
+            "employment_date" => today()
+        ])->create();;
     }
 }

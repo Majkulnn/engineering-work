@@ -48,10 +48,15 @@ class UserController extends Controller
     {
         $this->authorize("manageUsers");
 
-        User::create([
+        $user = User::create([
             "email" => $request->email,
             "password" => Str::password(),
             "role" => Role::Employee,
+        ]);
+
+        $user->profile()->create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
         ]);
 
         return redirect()->route("users.index");
@@ -65,7 +70,7 @@ class UserController extends Controller
     {
         $this->authorize("manageUsers");
 
-        $user->deleteOrFail();
+        $user->delete();
 
         return redirect()->route("users.index");
     }
