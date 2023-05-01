@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\FeatureTestCase;
 
@@ -19,7 +18,7 @@ class AuthenticationTest extends FeatureTestCase
             ->assertRedirect();
     }
 
-    public function testEmployeeCanAuthenticateUsingTheLoginScreen(): void
+    public function testUserCanAuthenticateUsingTheLoginScreen(): void
     {
         $user = User::factory()->create();
 
@@ -29,7 +28,7 @@ class AuthenticationTest extends FeatureTestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::Employee);
+        $response->assertRedirectToRoute("dashboard");
     }
 
     public function testUsersCanNotAuthenticateWithInvalidPassword(): void
