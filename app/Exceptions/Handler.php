@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,12 +37,14 @@ class Handler extends ExceptionHandler
         "password_confirmation",
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     */
-    public function register(): void
+    public function render($request, Throwable $e): Response
     {
-        $this->reportable(function (Throwable $e): void {
-        });
+        $response = parent::render($request, $e);
+
+        if ($response->status() === Response::HTTP_FORBIDDEN) {
+            return redirect()->route("dashboard");
+        }
+
+        return $response;
     }
 }

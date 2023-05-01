@@ -39,4 +39,18 @@ class UserFactory extends Factory
             "email_verified_at" => null,
         ]);
     }
+
+    public function admin(): static
+    {
+        return $this->state([
+            "role" => Role::Administrator,
+        ]);
+    }
+
+    public function manager(): static
+    {
+        return $this->state([
+            "role" => Role::Manager,
+        ]);
+    }
 }

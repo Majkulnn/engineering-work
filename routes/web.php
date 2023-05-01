@@ -5,9 +5,9 @@ declare(strict_types=1);
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +20,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get("/", function () {
-    return Inertia::render("Welcome", [
-        "laravelVersion" => Application::VERSION,
-        "phpVersion" => PHP_VERSION,
-    ]);
-})->name("home")->middleware("auth");
+Route::get("/")->middleware("auth")->name("home");
+
+// })->name("home")->middleware("auth");
 
 Route::get("/login", [LoginController::class, "index"])->name("login")->middleware("guest");
 Route::post("/login", [LoginController::class, "store"])->name("login.post");
@@ -33,7 +30,10 @@ Route::post("/login", [LoginController::class, "store"])->name("login.post");
 Route::middleware("auth")->group(function (): void {
     Route::post("/logout", LogoutController::class)->name("logout");
 
-    Route::get("/employee/dashboard", [DashboardController::class, "employee"])->name("employee.dashboard");
-    Route::get("/manager/dashboard", [DashboardController::class, "manager"])->name("manager.dashboard");
-    Route::get("/admin/dashboard", [DashboardController::class, "admin"])->name("admin.dashboard");
+    Route::get("/dashboard", [DashboardController::class, "dashboard"])->name("dashboard");
+
+    Route::get("/users", [UserController::class, "index"])->name("users.index");
+    Route::get("/users/create", [UserController::class, "create"])->name("users.create");
+    Route::post("/users/create", [UserController::class, "store"])->name("users.store");
+    Route::delete("/users/{user}", [UserController::class, "destroy"])->name("users.destroy");
 });

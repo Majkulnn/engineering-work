@@ -13,18 +13,8 @@ class DashboardController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function employee(): Response
+    public function dashboard(): Response
     {
-        return Inertia::render("Employees/Dashboard");
-    }
-
-    public function manager(): Response
-    {
-        return Inertia::render("Managers/Dashboard");
-    }
-
-    public function admin(): Response
-    {
-        return Inertia::render("Admin/Dashboard");
+        return Inertia::render("Dashboard");
     }
 }
