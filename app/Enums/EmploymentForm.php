@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum Role: string
+enum EmploymentForm: string
 {
-    case Administrator = "administrator";
-    case Manager = "manager";
-    case Employee = "employee";
+    case EmploymentContract = "employment_contract";
+    case MandateContract = "mandate_contract";
 
     public function label(): string
     {
@@ -17,10 +16,10 @@ enum Role: string
 
     public static function casesToSelect(): array
     {
-        $cases = collect(Role::cases());
+        $cases = collect(EmploymentForm::cases());
 
         return $cases->map(
-            fn(Role $enum): array => [
+            fn(EmploymentForm $enum): array => [
                 "label" => $enum->label(),
                 "value" => $enum->value,
             ],

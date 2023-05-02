@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Enums\EmploymentForm;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 /**
  * @property string $email
@@ -32,6 +34,9 @@ class UserStoreRequest extends FormRequest
             "email" => ["required", "string", "email", "unique:users"],
             "first_name" => ["required", "string"],
             "last_name" => ["required", "string"],
+            "position" => ["required", "string"],
+            "employment_form" => ["required", new Enum(EmploymentForm::class)],
+            "employment_date" => ["required", "date_format:Y-m-d"],
         ];
     }
 }

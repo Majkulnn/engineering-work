@@ -30,14 +30,31 @@ defineProps({
         </div>
         <div>
           <table class="border-2">
-            <tr v-for="user in users">
+            <tr v-for="user in users.data">
+              <td>
+                {{ user.last_name }}
+              </td>
               <td>
                 {{ user.email }}
               </td>
               <td>
                 {{ user.role }}
               </td>
+              <td>
+                {{ user.position }}
+              </td>
+              <td>
+                {{ user.employment_form }}
+              </td>
               <div>
+                <Link
+                  :href="`/users/${user.id}`"
+                  method="get"
+                  as="button"
+                  class="bg-orange-300 rounded-md"
+                >
+                  &nbsp;Show&nbsp;
+                </Link>
                 <Link
                   :href="`/users/${user.id}`"
                   method="delete"
@@ -46,12 +63,6 @@ defineProps({
                 >
                   &nbsp;Delete&nbsp;
                 </Link>
-                <td v-if="user.role === 'employee'">
-                  Promote
-                </td>
-                <td v-if="user.role === 'manager'">
-                  Demote
-                </td>
               </div>
             </tr>
           </table>
