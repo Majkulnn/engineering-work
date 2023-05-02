@@ -6,9 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\EmploymentForm;
 use App\Enums\Role;
-use App\Models\Profile;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,11 +22,11 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make("administrator"),
             "role" => Role::Administrator,
         ])->hasProfile([
-            "first_name" => 'Admin',
-            "last_name" => 'Admin',
-            "position" => 'IT Specialist',
+            "first_name" => "Admin",
+            "last_name" => "Admin",
+            "position" => "IT Specialist",
             "employment_form" => EmploymentForm::EmploymentContract,
-            "employment_date" => today()
+            "employment_date" => today(),
         ])->create();
 
         User::factory([
@@ -36,11 +34,11 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make("employee"),
             "role" => Role::Employee,
         ])->hasProfile([
-            "first_name" => 'John',
-            "last_name" => 'Doe',
-            "position" => 'Social Worker',
+            "first_name" => "John",
+            "last_name" => "Doe",
+            "position" => "Social Worker",
             "employment_form" => EmploymentForm::MandateContract,
-            "employment_date" => today()
+            "employment_date" => today(),
         ])->create();
 
         User::factory([
@@ -48,11 +46,11 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make("manager"),
             "role" => Role::Manager,
         ])->hasProfile([
-            "first_name" => 'Jon',
-            "last_name" => 'Deer',
-            "position" => 'HR Manager',
+            "first_name" => "Jon",
+            "last_name" => "Deer",
+            "position" => "HR Manager",
             "employment_form" => EmploymentForm::EmploymentContract,
-            "employment_date" => today()
-        ])->create();;
+            "employment_date" => today(),
+        ])->create();
     }
 }

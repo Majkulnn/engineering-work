@@ -14,6 +14,7 @@ enum Role: string
     {
         return __($this->value);
     }
+
     public static function casesToSelect(): array
     {
         $cases = collect(Role::cases());

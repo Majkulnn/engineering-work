@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Profile extends Model
 {
     use HasFactory;
+
     protected $primaryKey = "user_id";
     protected $guarded = [];
     protected $casts = [
@@ -25,5 +26,4 @@ class Profile extends Model
         return $this->belongsTo(User::class)
             ->withTrashed();
     }
-
 }

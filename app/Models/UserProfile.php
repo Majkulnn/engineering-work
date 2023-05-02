@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class UserProfile extends Model
 {
     use HasFactory;
+
     protected $casts = [
         "employment_form" => EmploymentForm::class,
         "employment_date" => "date",
@@ -23,5 +24,4 @@ class UserProfile extends Model
         return $this->belongsTo(User::class)
             ->withTrashed();
     }
-
 }

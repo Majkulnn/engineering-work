@@ -58,7 +58,7 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'profile'
+        "profile",
     ];
 
     public function profile(): HasOne

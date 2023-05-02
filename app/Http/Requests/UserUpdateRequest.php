@@ -22,7 +22,7 @@ class UserUpdateRequest extends FormRequest
         return [
             "first_name" => ["required"],
             "last_name" => ["required"],
-            "email" => ["required", "email", Rule::unique('users','email')->ignore($this->user)],
+            "email" => ["required", "email", Rule::unique("users", "email")->ignore($this->user)],
             "role" => ["required", new Enum(Role::class)],
             "position" => ["required"],
             "employment_form" => ["required", new Enum(EmploymentForm::class)],
@@ -30,14 +30,15 @@ class UserUpdateRequest extends FormRequest
         ];
     }
 
-    public function userData():array
+    public function userData(): array
     {
         return [
             "email" => $this->get("email"),
             "role" => $this->get("role"),
         ];
     }
-    public function userProfileData():array
+
+    public function userProfileData(): array
     {
         return [
             "first_name" => $this->get("first_name"),

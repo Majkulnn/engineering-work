@@ -1,18 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
+return new class() extends Migration {
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create("profiles", function (Blueprint $table): void {
             $table->foreignIdFor(User::class)->primary();
             $table->string("first_name")->nullable();
             $table->string("last_name")->nullable();
@@ -23,11 +21,8 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists("profiles");
     }
 };

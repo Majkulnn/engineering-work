@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
-use function Ramsey\Uuid\v1;
 
 class UserController extends Controller
 {
@@ -29,17 +28,16 @@ class UserController extends Controller
         $this->authorize("manageUsers");
 
         $users = User::query()
-            ->whereNot('role','administrator')
-            ->orderBy(Profile::query()->select('last_name')->whereColumn("users.id", "profiles.user_id"))
+            ->whereNot("role", "administrator")
+            ->orderBy(Profile::query()->select("last_name")->whereColumn("users.id", "profiles.user_id"))
             ->paginate()->withQueryString();
 
         if (auth()->user()->role === Role::Administrator) {
             $users = User::query()
-                ->orderBy(Profile::query()->select('last_name')->whereColumn("users.id", "profiles.user_id"))
+                ->orderBy(Profile::query()->select("last_name")->whereColumn("users.id", "profiles.user_id"))
                 ->paginate()->withQueryString();
         }
 
-//        dd(UserResource::collection($users));
         return Inertia::render("User/List", [
             "users" => UserResource::collection($users),
         ]);
@@ -52,8 +50,8 @@ class UserController extends Controller
     {
         $this->authorize("manageUsers");
 
-        return Inertia::render("User/Create",[
-        'employment_forms'=>EmploymentForm::casesToSelect()
+        return Inertia::render("User/Create", [
+            "employment_forms" => EmploymentForm::casesToSelect(),
         ]);
     }
 
@@ -64,7 +62,6 @@ class UserController extends Controller
     {
         $this->authorize("manageUsers");
 
-
         $user = User::create([
             "email" => $request->email,
             "password" => Str::password(),
@@ -72,11 +69,11 @@ class UserController extends Controller
         ]);
 
         $user->profile()->create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'position' => $request->position,
-            'employment_form' => $request->employment_form,
-            'employment_date' => $request->employment_date,
+            "first_name" => $request->first_name,
+            "last_name" => $request->last_name,
+            "position" => $request->position,
+            "employment_form" => $request->employment_form,
+            "employment_date" => $request->employment_date,
         ]);
 
         return redirect()->route("users.index");
@@ -89,8 +86,8 @@ class UserController extends Controller
     {
         $this->authorize("manageUsers");
 
-        return Inertia::render('User/Show',[
-            'user' => new UserResource($user)]);
+        return Inertia::render("User/Show", [
+            "user" => new UserResource($user)]);
     }
 
     /**
@@ -100,13 +97,12 @@ class UserController extends Controller
     {
         $this->authorize("manageUsers");
 
-        return Inertia::render('User/Edit',[
-            'user' => new UserResource($user),
+        return Inertia::render("User/Edit", [
+            "user" => new UserResource($user),
             "employmentForms" => EmploymentForm::casesToSelect(),
             "roles" => Role::casesToSelect(),
         ]);
     }
-
 
     /**
      * @throws AuthorizationException
@@ -118,9 +114,8 @@ class UserController extends Controller
         $user->update($request->userData());
         $user->profile()->update($request->userProfileData());
 
-        return redirect()->route('users.show',$user->id);
+        return redirect()->route("users.show", $user->id);
     }
-
 
     /**
      * @throws Throwable

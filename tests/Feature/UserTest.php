@@ -86,11 +86,11 @@ class UserTest extends FeatureTestCase
                 "email" => "testUser@test.com",
                 "first_name" => "John",
                 "last_name" => "Doe",
-                'position' => "Office Worker",
-                'employment_form' => EmploymentForm::EmploymentContract->value,
-                'employment_date' => Carbon::now()->toDateString(),
+                "position" => "Office Worker",
+                "employment_form" => EmploymentForm::EmploymentContract->value,
+                "employment_date" => Carbon::now()->toDateString(),
             ])
-        ->assertSessionHasNoErrors();
+            ->assertSessionHasNoErrors();
 
         $this->assertDatabaseCount("users", 2);
         $response->assertRedirectToRoute("users.index");
@@ -150,5 +150,4 @@ class UserTest extends FeatureTestCase
             "employment_date" => Carbon::now()->toDateString(),
         ]);
     }
-
 }

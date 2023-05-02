@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Enums\EmploymentForm;
 use App\Models\Profile;
 use App\Models\User;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProfileFactory extends Factory
@@ -20,7 +21,7 @@ class ProfileFactory extends Factory
             "last_name" => fake()->lastName(),
             "employment_form" => fake()->randomElement(EmploymentForm::cases()),
             "position" => fake()->jobTitle(),
-            "employment_date" => fake()->date('Y-m-d','now'),
+            "employment_date" => fake()->date("Y-m-d", "now"),
         ];
     }
 }

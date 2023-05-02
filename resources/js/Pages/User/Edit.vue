@@ -5,7 +5,7 @@ import TextInput from '@/Components/TextInput.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import SecondaryButton from '@/Components/SecondaryButton.vue'
 
 defineProps({
   auth: Object,
@@ -41,8 +41,8 @@ const form = useForm(usePage().props.user)
                 autofocus
               />
               <InputError
-                  class="mt-2"
-                  :message="form.errors.first_name"
+                class="mt-2"
+                :message="form.errors.first_name"
               />
             </div>
             <div class="max-w-2xl mx-auto">
@@ -54,8 +54,8 @@ const form = useForm(usePage().props.user)
                 class="mx-auto text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
               />
               <InputError
-                  class="mt-2"
-                  :message="form.errors.last_name"
+                class="mt-2"
+                :message="form.errors.last_name"
               />
             </div>
             <div class="max-w-2xl mx-auto">
@@ -67,13 +67,14 @@ const form = useForm(usePage().props.user)
                 class="mx-auto text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
               />
               <InputError
-                  class="mt-2"
-                  :message="form.errors.email"
+                class="mt-2"
+                :message="form.errors.email"
               />
             </div>
             <div
-                v-if="auth.can.manageUsersRoles"
-                class="max-w-2xl mx-auto">
+              v-if="auth.can.manageUsersRoles"
+              class="max-w-2xl mx-auto"
+            >
               <InputLabel value="Role" />
               <select
                 id="role"
@@ -82,12 +83,12 @@ const form = useForm(usePage().props.user)
                 class="mx-auto text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
               >
                 <option v-for="role in roles">
-                  {{role.value}}
+                  {{ role.value }}
                 </option>
               </select>
               <InputError
-                  class="mt-2"
-                  :message="form.errors.role"
+                class="mt-2"
+                :message="form.errors.role"
               />
             </div>
             <div class="max-w-2xl mx-auto">
@@ -99,8 +100,8 @@ const form = useForm(usePage().props.user)
                 class="mx-auto text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
               />
               <InputError
-                  class="mt-2"
-                  :message="form.errors.position"
+                class="mt-2"
+                :message="form.errors.position"
               />
             </div>
             <div class="max-w-2xl mx-auto">
@@ -112,12 +113,12 @@ const form = useForm(usePage().props.user)
                 class="mx-auto text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
               >
                 <option v-for="employmentForm in employmentForms">
-                  {{employmentForm.value}}
+                  {{ employmentForm.value }}
                 </option>
               </select>
               <InputError
-                  class="mt-2"
-                  :message="form.errors.employment_form"
+                class="mt-2"
+                :message="form.errors.employment_form"
               />
             </div>
             <div class="max-w-2xl mx-auto">
@@ -129,17 +130,15 @@ const form = useForm(usePage().props.user)
                 class="mx-auto text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
               />
               <InputError
-                  class="mt-2"
-                  :message="form.errors.employment_date"
+                class="mt-2"
+                :message="form.errors.employment_date"
               />
             </div>
             <PrimaryButton>
               Update
             </PrimaryButton>
           </form>
-          <div>
-
-          </div>
+          <div />
         </div>
       </div>
     </div>
