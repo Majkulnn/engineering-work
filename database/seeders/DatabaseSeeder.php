@@ -38,8 +38,8 @@ class DatabaseSeeder extends Seeder
         ])->hasProfile([
             "first_name" => 'John',
             "last_name" => 'Doe',
-            "position" => 'Manager',
-            "employment_form" => EmploymentForm::EmploymentContract,
+            "position" => 'Social Worker',
+            "employment_form" => EmploymentForm::MandateContract,
             "employment_date" => today()
         ])->create();
 
@@ -50,8 +50,8 @@ class DatabaseSeeder extends Seeder
         ])->hasProfile([
             "first_name" => 'Jon',
             "last_name" => 'Deer',
-            "position" => 'Social Worker',
-            "employment_form" => EmploymentForm::MandateContract,
+            "position" => 'HR Manager',
+            "employment_form" => EmploymentForm::EmploymentContract,
             "employment_date" => today()
         ])->create();;
     }

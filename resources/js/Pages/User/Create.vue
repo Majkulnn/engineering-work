@@ -8,14 +8,16 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 
 defineProps({
   auth: Object,
-  can: Object,
-  users: Object,
+  employment_forms: Object,
 })
 
 const form = useForm({
   email: '',
   first_name: '',
   last_name: '',
+  position: '',
+  employment_form: '',
+  employment_date: '',
 })
 
 </script>
@@ -31,7 +33,7 @@ const form = useForm({
           <form
             class="max-w-2xl mx-auto"
             method="post"
-            @submit.prevent="form.post('/users/create')"
+            @submit.prevent="form.post('/users')"
           >
             <div class="">
               <InputLabel
@@ -79,7 +81,7 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="last_name"
-                value="Email"
+                value="Last Name"
               />
 
               <TextInput
@@ -87,7 +89,7 @@ const form = useForm({
                 v-model="form.last_name"
                 type="text"
                 class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
-                placeholder="Email"
+                placeholder="Last Name"
                 required
                 autocomplete="last_name"
               />
@@ -95,6 +97,76 @@ const form = useForm({
               <InputError
                 class="mt-2"
                 :message="form.errors.last_name"
+              />
+            </div>
+            <div class="">
+              <InputLabel
+                for="position"
+                value="Position"
+              />
+
+              <TextInput
+                id="position"
+                v-model="form.position"
+                type="text"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                placeholder="Position"
+                required
+                autocomplete="position"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.position"
+              />
+            </div>
+            <div class="">
+              <InputLabel
+                for="employment_form"
+                value="Employment Form"
+              />
+
+<!--              <TextInput-->
+<!--                id="position"-->
+<!--                v-model="form.employment_form"-->
+<!--                type="text"-->
+<!--                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"-->
+<!--                placeholder="Position"-->
+<!--                autocomplete="position"-->
+<!--              />-->
+
+                            <select
+                              id="employment_form"
+                              v-model="form.employment_form"
+                              type="text"
+                              class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                              required
+                            >
+                              <option v-for="employmentForm in employment_forms">{{employmentForm.value}}</option>
+                            </select>
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.employment_form"
+              />
+            </div>
+            <div class="">
+              <InputLabel
+                for="employment_date"
+                value="Employment Date"
+              />
+
+              <TextInput
+                id="employment_date"
+                v-model="form.employment_date"
+                type="date"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                autocomplete="employment_date"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.employment_date"
               />
             </div>
             <div>

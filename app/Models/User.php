@@ -16,6 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $email
  * @property string $password
  * @property Role $role
+ * @property Profile $profile
  */
 
 class User extends Authenticatable
@@ -54,6 +55,10 @@ class User extends Authenticatable
     protected $casts = [
         "email_verified_at" => "datetime",
         "role" => Role::class,
+    ];
+
+    protected $with = [
+        'profile'
     ];
 
     public function profile(): HasOne

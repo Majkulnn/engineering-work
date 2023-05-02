@@ -35,8 +35,8 @@ class UserStoreRequest extends FormRequest
             "first_name" => ["required", "string"],
             "last_name" => ["required", "string"],
             "position" => ["required", "string"],
-            "employmentForm" => ["required", new Enum(EmploymentForm::class)],
-            "employmentDate" => ["required", "date_format:Y-m-d"],
+            "employment_form" => ["required", new Enum(EmploymentForm::class)],
+            "employment_date" => ["required", "date_format:Y-m-d"],
         ];
     }
 }
