@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Enums\EmploymentForm;
+use App\Enums\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Inertia\Testing\AssertableInertia;
 use Tests\FeatureTestCase;
@@ -37,7 +40,7 @@ class UserTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("User/List")
-                    ->has("users", 11),
+                    ->has("users.data", 11),
             );
     }
 
@@ -53,7 +56,7 @@ class UserTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("User/List")
-                    ->has("users", 11),
+                    ->has("users.data", 11),
             );
     }
 
@@ -70,7 +73,7 @@ class UserTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("User/List")
-                    ->has("users", 11),
+                    ->has("users.data", 11),
             );
     }
 
@@ -79,14 +82,18 @@ class UserTest extends FeatureTestCase
         $admin = User::factory()->admin()->create();
 
         $response = $this->actingAs($admin)
-            ->post("/users/create", [
+            ->post("/users", [
                 "email" => "testUser@test.com",
                 "first_name" => "John",
                 "last_name" => "Doe",
-            ]);
+                'position' => "Office Worker",
+                'employment_form' => EmploymentForm::EmploymentContract->value,
+                'employment_date' => Carbon::now()->toDateString(),
+            ])
+        ->assertSessionHasNoErrors();
 
-        $response->assertRedirectToRoute("users.index");
         $this->assertDatabaseCount("users", 2);
+        $response->assertRedirectToRoute("users.index");
     }
 
     public function testAdminCanDestroyUser(): void
@@ -100,4 +107,48 @@ class UserTest extends FeatureTestCase
         $response->assertRedirectToRoute("users.index");
         $this->assertSoftDeleted($user);
     }
+
+    public function testAdminCanEditUser(): void
+    {
+        Carbon::setTestNow();
+        $admin = User::factory()->admin()->create();
+
+        $user = User::factory()->create();
+
+        $this->assertDatabaseHas("profiles", [
+            "user_id" => $user->id,
+            "first_name" => $user->profile->first_name,
+            "last_name" => $user->profile->last_name,
+            "employment_form" => $user->profile->employment_form->value,
+            "employment_date" => $user->profile->employment_date->toDateString(),
+        ]);
+
+        $this->actingAs($admin)
+            ->put("/users/{$user->id}", [
+                "first_name" => "John",
+                "last_name" => "Doe",
+                "email" => "john.doe@example.com",
+                "role" => Role::Manager->value,
+                "position" => "Test position",
+                "employment_form" => EmploymentForm::MandateContract->value,
+                "employment_date" => Carbon::now()->toDateString(),
+            ])
+            ->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas("users", [
+            "id" => $user->id,
+            "email" => "john.doe@example.com",
+            "role" => Role::Manager->value,
+        ]);
+
+        $this->assertDatabaseHas("profiles", [
+            "user_id" => $user->id,
+            "first_name" => "John",
+            "last_name" => "Doe",
+            "position" => "Test position",
+            "employment_form" => EmploymentForm::MandateContract->value,
+            "employment_date" => Carbon::now()->toDateString(),
+        ]);
+    }
+
 }

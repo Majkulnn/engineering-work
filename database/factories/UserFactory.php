@@ -42,7 +42,14 @@ class UserFactory extends Factory
         ]);
     }
 
-
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user):void{
+            if (!$user->profile()->exists()){
+                Profile::factory()->for($user)->create();
+            }
+        });
+    }
 
     public function admin(): static
     {

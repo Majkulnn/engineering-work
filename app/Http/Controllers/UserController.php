@@ -31,7 +31,7 @@ class UserController extends Controller
         $users = User::query()
             ->whereNot('role','administrator')
             ->orderBy(Profile::query()->select('last_name')->whereColumn("users.id", "profiles.user_id"))
-            ->get();
+            ->paginate()->withQueryString();
 
         if (auth()->user()->role === Role::Administrator) {
             $users = User::query()
