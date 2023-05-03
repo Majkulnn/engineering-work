@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HolidayRequestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
@@ -33,4 +34,6 @@ Route::middleware("auth")->group(function (): void {
     Route::get("/dashboard", [DashboardController::class, "dashboard"])->name("dashboard");
 
     Route::resource("/users", UserController::class);
+
+    Route::resource("/holiday/request", HolidayRequestController::class)->only(["index", "create", "store"]);
 });
