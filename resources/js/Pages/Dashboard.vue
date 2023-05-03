@@ -49,7 +49,11 @@ defineProps({
             </Link>
           </div>
           <div>
-            <Link :href="'/holiday/request/create'" as="button" class="bg-orange-300">
+            <Link
+              :href="'/holiday/request/create'"
+              as="button"
+              class="bg-orange-300"
+            >
               Create Holiday Request
             </Link>
           </div>

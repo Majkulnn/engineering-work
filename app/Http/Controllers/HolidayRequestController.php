@@ -22,30 +22,31 @@ class HolidayRequestController extends Controller
     {
         $this->authorize("manageHolidays");
 
-        $holidaysRequests = HolidaysRequest::query()->orderBy('start_date')->paginate();
+        $holidaysRequests = HolidaysRequest::query()->orderBy("start_date")->paginate();
 
-        return Inertia::render("Holidays/Requests/Index",[
-            'holidays' => $holidaysRequests
+        return Inertia::render("Holidays/Requests/Index", [
+            "holidays" => $holidaysRequests,
         ]);
     }
 
     public function create(): Response
     {
-        return Inertia::render("Holidays/Requests/Create",[
-            "holiday_type" => HolidaysType::casesToSelect()
+        return Inertia::render("Holidays/Requests/Create", [
+            "holiday_type" => HolidaysType::casesToSelect(),
         ]);
     }
 
     public function store(HolidaysRequestStoreRequest $request): RedirectResponse
     {
-        HolidaysRequest::create([
-            "creator_id" => auth()->user()->id,
+        HolidaysRequest::create(
+            [
+                "creator_id" => auth()->user()->id,
                 "start_date" => $request->start_date,
                 "end_date" => $request->end_date,
                 "type" => $request->type,
                 "reason" => $request?->reason,
-                "status" => HolidayRequestStatus::Pending
-            ]
+                "status" => HolidayRequestStatus::Pending,
+            ],
         );
 
         return redirect()->route("dashboard");

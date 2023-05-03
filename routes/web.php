@@ -7,7 +7,6 @@ use App\Http\Controllers\HolidayRequestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
-use App\Models\HolidaysRequest;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
@@ -36,5 +35,5 @@ Route::middleware("auth")->group(function (): void {
 
     Route::resource("/users", UserController::class);
 
-    Route::resource('/holiday/request', HolidayRequestController::class)->only(['index','create','store']);
+    Route::resource("/holiday/request", HolidayRequestController::class)->only(["index", "create", "store"]);
 });
