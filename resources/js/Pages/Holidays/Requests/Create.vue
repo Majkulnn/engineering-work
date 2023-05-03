@@ -1,0 +1,131 @@
+<script setup>
+import { Head, Link, useForm } from '@inertiajs/vue3'
+import AppLayout from '@/Layouts/AppLayout.vue'
+import TextInput from '@/Components/TextInput.vue'
+import InputError from '@/Components/InputError.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+
+defineProps({
+  auth: Object,
+  holiday_type: Object,
+})
+
+const form = useForm({
+  start_date: '',
+  end_date: '',
+  type: '',
+  reason: '',
+})
+
+</script>
+
+<template>
+  <Head title="Holiday Request" />
+
+  <AppLayout>
+    <div class="max-w-7xl mx-auto py-4">
+      <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
+        <div>
+          Crate Request
+          <form
+            class="max-w-2xl mx-auto"
+            method="post"
+            @submit.prevent="form.post('/holiday/request')"
+          >
+            <div class="">
+              <InputLabel
+                for="start_date"
+                value="From"
+              />
+
+              <TextInput
+                id="start_date"
+                v-model="form.start_date"
+                type="date"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                required
+                autofocus
+                autocomplete="start_date"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.start_date"
+              />
+            </div>
+            <div class="">
+              <InputLabel
+                for="end_date"
+                value="To"
+              />
+
+              <TextInput
+                id="end_date"
+                v-model="form.end_date"
+                type="date"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                required
+                autocomplete="end_date"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.end_date"
+              />
+            </div>
+            <div class="">
+              <InputLabel
+                for="type"
+                value="Holiday Type"
+              />
+
+              <select
+                id="type"
+                v-model="form.type"
+                type="text"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                required
+                autocomplete="type"
+              >
+                <option v-for="holidayType in holiday_type">
+                  {{ holidayType.label }}
+                </option>
+              </select>
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.type"
+              />
+            </div>
+            <div class="">
+              <InputLabel
+                for="reason"
+                value="Reason"
+              />
+
+              <TextInput
+                id="position"
+                v-model="form.reason"
+                type="text"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                placeholder="Reason"
+                autocomplete="reason"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.reason"
+              />
+            </div>
+            <div>
+              <PrimaryButton href="'/users/store'">
+                Create
+              </PrimaryButton>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </AppLayout>
+</template>

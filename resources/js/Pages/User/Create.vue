@@ -126,15 +126,6 @@ const form = useForm({
                 value="Employment Form"
               />
 
-              <!--              <TextInput-->
-              <!--                id="position"-->
-              <!--                v-model="form.employment_form"-->
-              <!--                type="text"-->
-              <!--                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"-->
-              <!--                placeholder="Position"-->
-              <!--                autocomplete="position"-->
-              <!--              />-->
-
               <select
                 id="employment_form"
                 v-model="form.employment_form"

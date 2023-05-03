@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\EmploymentForm;
 use App\Enums\Role;
+use App\Models\HolidaysRequest;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -52,5 +53,7 @@ class DatabaseSeeder extends Seeder
             "employment_form" => EmploymentForm::EmploymentContract,
             "employment_date" => today(),
         ])->create();
+
+        HolidaysRequest::factory(15)->create();
     }
 }
