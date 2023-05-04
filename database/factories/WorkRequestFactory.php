@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Enums\Role;
@@ -19,9 +21,9 @@ class WorkRequestFactory extends Factory
      */
     public function definition(): array
     {
-        $from = CarbonImmutable::create(fake()->time('H:i:s'));
+        $from = CarbonImmutable::create(fake()->time("H:i:s"));
         return [
-            "creator_id" => User::query()->whereIn('role',[Role::Employee, Role::Manager])->get()->random(),
+            "creator_id" => User::query()->whereIn("role", [Role::Employee, Role::Manager])->get()->random(),
             "date" => fake()->unique()->dateTimeThisMonth,
             "from" => $from,
             "to" => $from->addHours(7),

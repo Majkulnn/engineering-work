@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -19,6 +21,7 @@ class WorkRequest extends Model
     protected $casts = [
         "date" => "date",
     ];
+
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class)

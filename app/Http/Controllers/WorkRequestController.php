@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkRequestStoreRequest;
@@ -14,9 +16,8 @@ class WorkRequestController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): void
     {
-        //
     }
 
     /**
@@ -24,7 +25,7 @@ class WorkRequestController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('WorkRequests/Create');
+        return Inertia::render("WorkRequests/Create");
     }
 
     /**
@@ -33,44 +34,40 @@ class WorkRequestController extends Controller
     public function store(WorkRequestStoreRequest $request): RedirectResponse
     {
         WorkRequest::create([
-            'creator_id' => auth()->user()->id,
-            'date' => $request->date,
-            'from' => $request->from,
-            'to' => $request->to,
+            "creator_id" => auth()->user()->id,
+            "date" => $request->date,
+            "from" => $request->from,
+            "to" => $request->to,
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->route("dashboard");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(WorkRequest $workRequest)
+    public function show(WorkRequest $workRequest): void
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(WorkRequest $workRequest)
+    public function edit(WorkRequest $workRequest): void
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(WorkRequestUpdateRequest $request, WorkRequest $workRequest)
+    public function update(WorkRequestUpdateRequest $request, WorkRequest $workRequest): void
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(WorkRequest $workRequest)
+    public function destroy(WorkRequest $workRequest): void
     {
-        //
     }
 }
