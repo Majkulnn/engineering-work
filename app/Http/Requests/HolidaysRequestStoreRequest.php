@@ -19,7 +19,7 @@ class HolidaysRequestStoreRequest extends FormRequest
     {
         return [
             "start_date" => ["required", "date_format:Y-m-d"],
-            "end_date" => ["required", "date_format:Y-m-d", "after:start_date"],
+            "end_date" => ["required", "date_format:Y-m-d", "after_or_equal:start_date"],
             "type" => ["required", new Enum(HolidaysType::class)],
             "reason" => ["nullable"],
         ];

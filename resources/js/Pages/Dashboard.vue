@@ -57,6 +57,15 @@ defineProps({
               Create Holiday Request
             </Link>
           </div>
+          <div>
+            <Link
+                :href="'/work/request/create'"
+                as="button"
+                class="bg-amber-300"
+            >
+              Create Work Request
+            </Link>
+          </div>
         </div>
       </div>
     </div>
