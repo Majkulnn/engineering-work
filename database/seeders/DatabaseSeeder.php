@@ -8,6 +8,7 @@ use App\Enums\EmploymentForm;
 use App\Enums\Role;
 use App\Models\HolidaysRequest;
 use App\Models\User;
+use App\Models\WorkRequest;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -55,5 +56,6 @@ class DatabaseSeeder extends Seeder
         ])->create();
 
         HolidaysRequest::factory(15)->create();
+        WorkRequest::factory(15)->create();
     }
 }

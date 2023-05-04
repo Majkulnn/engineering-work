@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 defineProps({
@@ -55,6 +55,15 @@ defineProps({
               class="bg-orange-300"
             >
               Create Holiday Request
+            </Link>
+          </div>
+          <div>
+            <Link
+              :href="'/work/request/create'"
+              as="button"
+              class="bg-amber-300"
+            >
+              Create Work Request
             </Link>
           </div>
         </div>

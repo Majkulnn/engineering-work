@@ -9,13 +9,14 @@ use App\Enums\HolidaysType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
-/*
+/**
  * @property int $id
  * @property HolidaysType $type
- * @property HolidaysRequestStatus $status
+ * @property HolidayRequestStatus $status
  * @property Carbon $start_date
- * @property Carbon $$end_date
+ * @property Carbon $end_date
  * @property string $reason
  * @property User $creator
  */
