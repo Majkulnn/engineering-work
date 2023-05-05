@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\HolidayRequestStatus;
 use App\Enums\HolidaysType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,31 +13,22 @@ use Illuminate\Support\Carbon;
 /**
  * @property int $id
  * @property HolidaysType $type
- * @property HolidayRequestStatus $status
  * @property Carbon $start_date
  * @property Carbon $end_date
- * @property string $reason
- * @property User $creator
+ * @property User $user
  */
-class HolidaysRequest extends Model
+class Holiday extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
     protected $casts = [
         "type" => HolidaysType::class,
-        "status" => HolidayRequestStatus::class,
         "start_date" => "date",
         "end_date" => "date",
     ];
 
     public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class)
-            ->withTrashed();
-    }
-
-    public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class)
             ->withTrashed();

@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             "employment_date" => today(),
         ])->create();
 
-        HolidaysRequest::factory(15)->create();
+        HolidaysRequest::factory(17)->create();
         WorkRequest::factory(15)->create();
     }
 }
