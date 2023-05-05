@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\HolidayRequestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -36,6 +37,9 @@ Route::middleware("auth")->group(function (): void {
 
     Route::resource("/users", UserController::class);
 
-    Route::resource("/holiday/request", HolidayRequestController::class)->only(["index", "create", "store"]);
-    Route::resource("/work/request", WorkRequestController::class)->only(["index", "create", "store"]);
+    Route::resource("/holiday/request", HolidayRequestController::class)->only(["index", "create", "store"])->names("holidayRequest");
+    Route::put("/holiday/request/{holidayRequest_id}/accept", [HolidayRequestController::class, "acceptRequest"])->name("holidayRequest.accept");
+    Route::put("/holiday/request/{holidayRequest_id}/reject", [HolidayRequestController::class, "rejectRequest"])->name("holidayRequest.reject");
+    Route::get("/holidays", [HolidayController::class, "index"])->name("holidays.index");
+    Route::resource("/work/request", WorkRequestController::class)->only(["index", "create", "store"])->names("workRequest");
 });

@@ -6,9 +6,9 @@ namespace App\Enums;
 
 enum HolidayRequestStatus: string
 {
-    case Pending = "pending";
-    case Accepted = "accepted";
-    case Rejected = "rejected";
+    case Pending = "PENDING";
+    case Accepted = "ACCEPTED";
+    case Rejected = "REJECTED";
 
     public function label(): string
     {

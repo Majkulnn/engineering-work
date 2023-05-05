@@ -43,18 +43,14 @@ defineProps({
               Manage Users
             </Link>
           </div>
-          <div v-if="auth.can.manageHolidays">
-            <Link :href="'/users'">
+          <div>
+            <Link :href="'/holiday/request'">
               Manage Holidays Requests
             </Link>
           </div>
-          <div>
-            <Link
-              :href="'/holiday/request/create'"
-              as="button"
-              class="bg-orange-300"
-            >
-              Create Holiday Request
+          <div v-if="auth.can.manageHolidays">
+            <Link :href="'/holidays'">
+              Manage Holidays
             </Link>
           </div>
           <div>

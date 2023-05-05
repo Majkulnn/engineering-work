@@ -19,12 +19,19 @@ class HolidaysRequestFactory extends Factory
     {
         $from = CarbonImmutable::create(fake()->dateTimeThisYear());
         return [
-            "creator_id" => User::all()->random(),
+            "creator_id" => User::factory(),
             "start_date" => $from,
             "end_date" => $from->addDays(12),
             "type" => fake()->randomElement(HolidaysType::cases()),
             "status" => fake()->randomElement(HolidayRequestStatus::cases()),
             "reason" => fake()->boolean ? fake()->realText(50) : null,
         ];
+    }
+
+    public function pending()
+    {
+        return $this->state([
+            "status" => HolidayRequestStatus::Pending,
+        ]);
     }
 }

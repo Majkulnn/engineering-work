@@ -7,7 +7,10 @@ namespace App\Http\Controllers;
 use App\Enums\HolidayRequestStatus;
 use App\Enums\HolidaysType;
 use App\Http\Requests\HolidaysRequestStoreRequest;
+use App\Http\Resources\HolidaysRequestResource;
+use App\Models\Holiday;
 use App\Models\HolidaysRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,18 +23,21 @@ class HolidayRequestController extends Controller
      */
     public function index(): Response
     {
-        $this->authorize("manageHolidays");
+        try {
+            $this->authorize("manageHolidays");
+            $holidaysRequests = HolidaysRequest::query()->orderBy("start_date")->paginate(20);
+        } catch (AuthorizationException $e) {
+            $holidaysRequests = HolidaysRequest::query()->whereIn("creator_id", [auth()->user()->id])->orderBy("start_date")->paginate(20);
+        }
 
-        $holidaysRequests = HolidaysRequest::query()->orderBy("start_date")->paginate();
-
-        return Inertia::render("Holidays/Requests/Index", [
-            "holidays" => $holidaysRequests,
+        return Inertia::render("Holidays/Request/Index", [
+            "holidays_requests" => HolidaysRequestResource::collection($holidaysRequests),
         ]);
     }
 
     public function create(): Response
     {
-        return Inertia::render("Holidays/Requests/Create", [
+        return Inertia::render("Holidays/Request/Create", [
             "holiday_type" => HolidaysType::casesToSelect(),
         ]);
     }
@@ -50,5 +56,36 @@ class HolidayRequestController extends Controller
         );
 
         return redirect()->route("dashboard");
+    }
+
+    public function acceptRequest(int $id): RedirectResponse
+    {
+        $holidaysRequest = HolidaysRequest::query()->find($id);
+        Holiday::create([
+            "user_id" => $holidaysRequest->creator_id,
+            "start_date" => $holidaysRequest->start_date,
+            "end_date" => $holidaysRequest->end_date,
+            "type" => $holidaysRequest->type,
+            "days_count" => date_diff($holidaysRequest->start_date, $holidaysRequest->end_date)->days + 1,
+        ]);
+        $holidaysRequest->update(
+            [
+                "status" => HolidayRequestStatus::Accepted,
+            ],
+        );
+
+        return redirect()->route("holidayRequest.index");
+    }
+
+    public function rejectRequest(int $id): RedirectResponse
+    {
+        $holidaysRequest = HolidaysRequest::query()->find($id);
+        $holidaysRequest->update(
+            [
+                "status" => HolidayRequestStatus::Rejected,
+            ],
+        );
+
+        return redirect()->route("holidayRequest.index");
     }
 }
