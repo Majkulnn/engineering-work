@@ -14,41 +14,68 @@ class WorkTimeTest extends FeatureTestCase
 {
     use DatabaseMigrations;
 
-    public function testAdminCanSeeWorkTimeList(): void
+    public function testAdminCanSeeWorkTimeCalendar(): void
     {
-        User::factory(10)->has("workTime")->create();
+        User::factory(10)->hasWorkTimes()->create();
         $admin = User::factory()->admin()->create();
 
-        $this->assertDatabaseCount("work_time", 10);
+        $this->assertDatabaseCount("work_times", 10);
+        $this->assertDatabaseCount("users", 11);
 
         $this->actingAs($admin)
+            ->get("/workTime/create")
+            ->assertInertia(
+                fn(AssertableInertia $page) => $page
+                    ->component("WorkTime/Create")
+                    ->has("users", 10),
+            );
+    }
+
+    public function testManagerCanSeeWorkTimeCalendar(): void
+    {
+        User::factory(10)->hasWorkTimes()->create();
+        $manager = User::factory()->manager()->hasWorkTimes()->create();
+
+        $this->assertDatabaseCount("work_times", 11);
+        $this->assertDatabaseCount("users", 11);
+
+        $this->actingAs($manager)
+            ->get("/workTime/create")
+            ->assertInertia(
+                fn(AssertableInertia $page) => $page
+                    ->component("WorkTime/Create")
+                    ->has("users", 11),
+            );
+    }
+
+    public function testEmployeeCanNotManageWorkTimeCalendar(): void
+    {
+        User::factory(10)->hasWorkTimes()->create();
+        $employee = User::factory()->hasWorkTimes()->create();
+
+        $this->assertDatabaseCount("users", 11);
+        $this->assertDatabaseCount("work_times", 11);
+
+        $this->actingAs($employee)
+            ->get("/workTime/create")
+            ->assertRedirectToRoute("dashboard");
+    }
+
+    public function testEmployeeCanSeeHisWorkTimeCalendar(): void
+    {
+        User::factory(10)->hasWorkTimes()->create();
+        $employee = User::factory()->hasWorkTimes(5)->create();
+
+        $this->assertDatabaseCount("work_times", 15);
+        $this->assertDatabaseCount("users", 11);
+
+        $this->actingAs($employee)
             ->get("/workTime")
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("WorkTime/Index")
-                    ->has("users.data", 10),
+                    ->has("workTimes", 5),
             );
     }
 
-    /**
-     * @throws \JsonException
-     */
-    public function testUserCanCreateWorkRequest(): void
-    {
-        $user = User::factory()->create();
-        $from = Carbon::now();
-        $to = $from->addHours(random_int(3, 12));
-
-        $response = $this->actingAs($user)
-            ->post("/work/request", [
-                "date" => Carbon::today()->toDateString(),
-                "from" => $from->toTimeString(),
-                "to" => $to->toTimeString(),
-                "hour_count" => $to->diff($from)->format("%H:%I:%S"),
-            ])
-            ->assertSessionHasNoErrors();
-
-        $this->assertDatabaseCount("work_requests", 1);
-        $response->assertRedirectToRoute("dashboard");
-    }
 }

@@ -51,15 +51,6 @@ class UserFactory extends Factory
             if (!$user->profile()->exists()) {
                 Profile::factory()->for($user)->create();
             }
-            if (!$user->holidaysRequest()->exists()) {
-                HolidaysRequest::factory(2)->for($user, "creator")->create();
-            }
-            if (!$user->holidays()->exists()) {
-                Holiday::factory(2)->for($user)->create();
-            }
-            if (!$user->workTimes()->exists()) {
-                WorkTime::factory(2)->for($user)->create();
-            }
         });
     }
 

@@ -13,6 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Momentum\Modal\Modal;
 
 class HolidayController extends Controller
 {
@@ -22,9 +23,13 @@ class HolidayController extends Controller
      */
     public function index(): Response
     {
-        $this->authorize("manageHolidays");
+        try {
+            $this->authorize("manageHolidays");
+            $holidays = Holiday::query()->orderBy('start_date')->get();
+        } catch (AuthorizationException $e) {
+            $holidays = Holiday::query()->whereIn("user_id", [auth()->user()->id])->orderBy("start_date")->get();
 
-        $holidays = Holiday::all();
+        }
 
         return Inertia::render("Holidays/Index", [
             "holidays" => HolidaysResource::collection($holidays),
@@ -34,7 +39,7 @@ class HolidayController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function show(int $id): \Momentum\Modal\Modal
+    public function show(int $id): Modal
     {
         $this->authorize("manageHolidays");
 

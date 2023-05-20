@@ -28,7 +28,7 @@ class HolidayRequestsTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("Holidays/Request/Index")
-                    ->has("holidays_requests.data", 10),
+                    ->has("holidaysRequests", 10),
             );
     }
 
@@ -46,7 +46,7 @@ class HolidayRequestsTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("Holidays/Request/Index")
-                    ->has("holidays_requests.data", 5),
+                    ->has("holidaysRequests", 5),
             );
     }
 
