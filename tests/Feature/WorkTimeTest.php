@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Inertia\Testing\AssertableInertia;
 use Tests\FeatureTestCase;
@@ -77,5 +76,4 @@ class WorkTimeTest extends FeatureTestCase
                     ->has("workTimes", 5),
             );
     }
-
 }

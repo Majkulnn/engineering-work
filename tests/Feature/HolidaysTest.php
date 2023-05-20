@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Enums\HolidaysType;
 use App\Models\Holiday;
-use App\Models\HolidaysRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -54,7 +52,7 @@ class HolidaysTest extends FeatureTestCase
     public function testAdminCanSeeHolidaysSummary(): void
     {
         $date = Carbon::now()->toDateString();
-        User::factory(10)->hasHolidays(['start_date' => $date])->create();
+        User::factory(10)->hasHolidays(["start_date" => $date])->create();
         $admin = User::factory()->admin()->create();
 
         $this->assertDatabaseCount("holidays", 10);
@@ -65,8 +63,8 @@ class HolidaysTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("Holidays/Summary")
-                    ->has('users.data', 11)
-                    ->has('holidays', 10),
+                    ->has("users.data", 11)
+                    ->has("holidays", 10),
             );
     }
 }

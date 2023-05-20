@@ -37,7 +37,7 @@ class WorkTimeController extends Controller
         $this->authorize("manageWorkTimes");
 
         $users = User::query()
-            ->whereNot('role','administrator')
+            ->whereNot("role", "administrator")
             ->orderBy(Profile::query()->select("last_name")->whereColumn("users.id", "profiles.user_id"))
             ->with("workTimes")
             ->with("workRequests")

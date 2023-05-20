@@ -25,10 +25,9 @@ class HolidayController extends Controller
     {
         try {
             $this->authorize("manageHolidays");
-            $holidays = Holiday::query()->orderBy('start_date')->get();
+            $holidays = Holiday::query()->orderBy("start_date")->get();
         } catch (AuthorizationException $e) {
             $holidays = Holiday::query()->whereIn("user_id", [auth()->user()->id])->orderBy("start_date")->get();
-
         }
 
         return Inertia::render("Holidays/Index", [
