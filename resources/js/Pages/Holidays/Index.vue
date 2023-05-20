@@ -1,12 +1,47 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import FullCalendar from '@fullcalendar/vue3'
+import { Head, Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
-import DangerButton from '@/Components/DangerButton.vue'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import { reactive } from 'vue'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list'
+import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
 
-defineProps({
+const props = defineProps({
   auth: Object,
   holidays: Object,
+})
+const events = () => {
+  const events = []
+  for (const item of props.holidays) {
+    events.push({
+      id: item.id,
+      title: item?.user ? item.user : 'name',
+      start: item.start_date ? item.start_date : 'no date',
+      end: item.end_date,
+      status: item.status,
+    })
+  }
+  return events
+}
+const handleEventClick = (info) => {
+  router.get(`/holidays/${info.event.id}`)
+}
+const calendarOptions = reactive({
+  schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+  plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin, resourceTimelinePlugin],
+  initialView: 'dayGridMonth',
+  headerToolbar: {
+    left: 'prev,next,today',
+    center: 'title',
+    right: 'dayGridMonth,dayGridWeek,listDay',
+  },
+  height: 'auto',
+  weekends: false,
+  events: events(),
+  eventClick: handleEventClick,
 })
 
 </script>
@@ -29,25 +64,10 @@ defineProps({
           </div>
         </div>
         <div>
-          <table class="border-2">
-            <tr v-for="holiday in holidays">
-              <td>
-                {{ holiday.user }}
-              </td>
-              <td>
-                {{ holiday.start_date }}
-              </td>
-              <td>
-                {{ holiday.end_date }}
-              </td>
-              <td>
-                {{ holiday.type }}
-              </td>
-              <td>
-                {{ holiday.days }}
-              </td>
-            </tr>
-          </table>
+          <FullCalendar
+            :events="events()"
+            :options="calendarOptions"
+          />
         </div>
       </div>
     </div>

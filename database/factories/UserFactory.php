@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\Role;
+use App\Models\Holiday;
+use App\Models\HolidaysRequest;
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\WorkTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -47,6 +50,15 @@ class UserFactory extends Factory
         return $this->afterCreating(function (User $user): void {
             if (!$user->profile()->exists()) {
                 Profile::factory()->for($user)->create();
+            }
+            if (!$user->holidaysRequest()->exists()) {
+                HolidaysRequest::factory(2)->for($user, "creator")->create();
+            }
+            if (!$user->holidays()->exists()) {
+                Holiday::factory(2)->for($user)->create();
+            }
+            if (!$user->workTimes()->exists()) {
+                WorkTime::factory(2)->for($user)->create();
             }
         });
     }

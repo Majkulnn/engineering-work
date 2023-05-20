@@ -4,7 +4,8 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 
 defineProps({
   auth: Object,
-  can: Object,
+  nextWork: Object,
+  nextHoliday: null,
 })
 
 </script>
@@ -53,6 +54,11 @@ defineProps({
               Manage Holidays
             </Link>
           </div>
+          <div v-if="auth.can.manageHolidays">
+            <Link :href="'/holiday/summary'">
+              Holidays Summary
+            </Link>
+          </div>
           <div>
             <Link
               :href="'/work/request/create'"
@@ -61,6 +67,53 @@ defineProps({
             >
               Create Work Request
             </Link>
+          </div>
+          <div v-if="auth.can.manageWorkTimes">
+            <Link
+              :href="'/workTime/create'"
+              as="button"
+              class=""
+            >
+              Manage Work
+            </Link>
+          </div>
+          <div v-if="auth.can.manageWorkTimes">
+            <Link
+              :href="'/workTime/summary'"
+              as="button"
+              class=""
+            >
+              Work Time Summary
+            </Link>
+          </div>
+          <div>
+            <Link
+              :href="'/workTime'"
+              as="button"
+              class=""
+            >
+              Work Schedule
+            </Link>
+          </div>
+          <div class="bg-orange-200 h-1/6 w-2/6 border-2 border-black">
+            Next Working Hour
+            <div v-if="nextWork">
+              <span>{{ nextWork.date }}</span><br>
+              <span>{{ nextWork.start }} - {{ nextWork.end }}</span>
+            </div>
+            <div v-else>
+              There is not work anytime soon
+            </div>
+          </div>
+          <div class="bg-orange-200 h-1/6 w-2/6 border-2 border-orange-500">
+            Next Holiday
+            <div v-if="nextHoliday">
+              <span>{{ nextHoliday.start_date }}</span><br>
+              <span>{{ nextHoliday.type }}</span>
+            </div>
+            <div v-else>
+              There is not vacation anytime soon
+            </div>
           </div>
         </div>
       </div>

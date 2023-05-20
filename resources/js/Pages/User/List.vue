@@ -1,8 +1,6 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
-import DangerButton from '@/Components/DangerButton.vue'
 
 defineProps({
   auth: Object,

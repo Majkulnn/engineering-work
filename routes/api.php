@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\API\FetchDataToCalendarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware("auth:sanctum")->get("/user", fn(Request $request) => $request->user());
+Route::get("/workTimes", [FetchDataToCalendarController::class, "getWorkTimes"]);
+Route::get("/holidays", [FetchDataToCalendarController::class, "getHolidays"]);
+Route::get("/workRequests", [FetchDataToCalendarController::class, "getWorkTimeRequests"]);

@@ -1,13 +1,59 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head, Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
-import DangerButton from '@/Components/DangerButton.vue'
+import FullCalendar from '@fullcalendar/vue3'
+import { reactive } from 'vue'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import listPlugin from '@fullcalendar/list'
+import multiMonthPlugin from '@fullcalendar/multimonth'
+import SecondaryButton from '@/Components/SecondaryButton.vue'
 
-defineProps({
+const props = defineProps({
   auth: Object,
-  holidays_requests: Object,
+  holidaysRequests: Object,
 })
+const events = () => {
+  const events = []
+  for (const item of props.holidaysRequests) {
+    events.push({
+      id: item.id,
+      title: item.creator,
+      start: item.start_date,
+      end: item.end_date,
+      backgroundColor: (item.status === 'PENDING' ? 'orange' : (item.status === 'ACCEPTED' ? 'green' : 'red')),
+      extendedProps: {
+        status: item.status,
+        type: item.type,
+      },
+    })
+  }
+  return events
+}
+const handleEventClick = (info) => {
+  router.get(`/holiday/request/${info.event.id}/edit`)
+}
+const calendarOptions = reactive({
+  schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+  themeSystem: 'standard',
+  plugins: [dayGridPlugin, interactionPlugin, listPlugin, multiMonthPlugin],
+  initialView: 'dayGridMonth',
+  headerToolbar: {
+    left: 'prev,next,today',
+    center: 'title',
+    right: 'dayGridWeek,dayGridMonth,multiMonthYear,listWeek',
+  },
+  height: 'auto',
+  weekends: true,
+  eventSources: [events()],
+  editable: true,
+  eventClick: handleEventClick,
+})
+let isShow = true
+const showCalendar = () => {
+  isShow = !isShow
+  router.reload()
+}
 
 </script>
 
@@ -27,7 +73,7 @@ defineProps({
               Back
             </Link>
           </div>
-          <div v-if="auth.user.role != 'administrator'">
+          <div v-if="auth.user.role !== 'administrator'">
             <Link
               :href="'/holiday/request/create'"
               as="button"
@@ -36,10 +82,18 @@ defineProps({
               Create Holiday Request
             </Link>
           </div>
+          <div>
+            <SecondaryButton @click="showCalendar()">
+              Calendar / Tablelist
+            </SecondaryButton>
+          </div>
         </div>
-        <div>
+        <div v-if="isShow">
+          <FullCalendar :options="calendarOptions" />
+        </div>
+        <div v-if="!isShow">
           <table class="border-2">
-            <tr v-for="holidayRequest in holidays_requests.data">
+            <tr v-for="holidayRequest in holidaysRequests">
               <td>
                 {{ holidayRequest.creator }}
               </td>
@@ -58,7 +112,7 @@ defineProps({
               <td>
                 {{ holidayRequest.status }}
               </td>
-              <div v-if="holidayRequest.status == 'PENDING' && auth.can.manageHolidays">
+              <div v-if="holidayRequest.status === 'PENDING' && auth.can.manageHolidays">
                 <Link
                   :href="`/holiday/request/${holidayRequest.id}/accept`"
                   method="put"
