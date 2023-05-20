@@ -2,9 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import TextInput from '@/Components/TextInput.vue'
-import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
 
 defineProps({
   auth: Object,

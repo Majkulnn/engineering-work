@@ -69,11 +69,21 @@ class User extends Authenticatable
 
     public function holidaysRequest(): HasMany
     {
-        return $this->hasMany(HolidaysRequest::class);
+        return $this->hasMany(HolidaysRequest::class, "creator_id");
     }
 
     public function holidays(): HasMany
     {
         return $this->hasMany(Holiday::class);
+    }
+
+    public function workTimes(): HasMany
+    {
+        return $this->hasMany(WorkTime::class);
+    }
+
+    public function workRequests(): HasMany
+    {
+        return $this->hasMany(WorkRequest::class, "creator_id");
     }
 }

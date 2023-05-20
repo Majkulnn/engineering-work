@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Enums\Role;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -24,13 +23,6 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if (Auth::user()?->role === Role::Employee) {
-                    return redirect(RouteServiceProvider::Employee);
-                }
-                if (Auth::user()?->role === Role::Manager) {
-                    return redirect(RouteServiceProvider::Manager);
-                }
-
                 return redirect(RouteServiceProvider::HOME);
             }
         }

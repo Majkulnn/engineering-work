@@ -1,5 +1,6 @@
 <script setup>
 import { Head, useForm, Link } from '@inertiajs/vue3'
+import { Modal } from 'momentum-modal'
 
 defineProps({
   auth: Object,
@@ -22,6 +23,7 @@ defineProps({
       </Link>
     </div>
     <div class="px-6 2xl:container mx-auto">
+      <Modal />
       <slot />
     </div>
   </div>

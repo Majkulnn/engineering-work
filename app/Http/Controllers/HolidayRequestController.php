@@ -12,9 +12,9 @@ use App\Models\Holiday;
 use App\Models\HolidaysRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Momentum\Modal\Modal;
 
 class HolidayRequestController extends Controller
 {
@@ -25,13 +25,13 @@ class HolidayRequestController extends Controller
     {
         try {
             $this->authorize("manageHolidays");
-            $holidaysRequests = HolidaysRequest::query()->orderBy("start_date")->paginate(20);
+            $holidaysRequests = HolidaysRequest::query()->orderBy("start_date")->get();
         } catch (AuthorizationException $e) {
-            $holidaysRequests = HolidaysRequest::query()->whereIn("creator_id", [auth()->user()->id])->orderBy("start_date")->paginate(20);
+            $holidaysRequests = HolidaysRequest::query()->whereIn("creator_id", [auth()->user()->id])->orderBy("start_date")->get();
         }
 
         return Inertia::render("Holidays/Request/Index", [
-            "holidays_requests" => HolidaysRequestResource::collection($holidaysRequests),
+            "holidaysRequests" => HolidaysRequestResource::collection($holidaysRequests),
         ]);
     }
 
@@ -58,9 +58,28 @@ class HolidayRequestController extends Controller
         return redirect()->route("dashboard");
     }
 
+    /**
+     * @throws AuthorizationException
+     */
+    public function edit(int $id): Modal
+    {
+        $this->authorize("manageHolidays");
+        $holidayRequest = HolidaysRequest::query()->find($id);
+
+        return Inertia::modal("Holidays/Request/EditModal", [
+            "holidayRequest" => new HolidaysRequestResource($holidayRequest),
+        ])->baseRoute("holidayRequest.index");
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
     public function acceptRequest(int $id): RedirectResponse
     {
+        $this->authorize("manageHolidays");
+
         $holidaysRequest = HolidaysRequest::query()->find($id);
+
         Holiday::create([
             "user_id" => $holidaysRequest->creator_id,
             "start_date" => $holidaysRequest->start_date,
@@ -77,8 +96,12 @@ class HolidayRequestController extends Controller
         return redirect()->route("holidayRequest.index");
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function rejectRequest(int $id): RedirectResponse
     {
+        $this->authorize("manageHolidays");
         $holidaysRequest = HolidaysRequest::query()->find($id);
         $holidaysRequest->update(
             [

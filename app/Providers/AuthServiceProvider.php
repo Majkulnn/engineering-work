@@ -33,5 +33,6 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define("manageUsers", fn(User $user): bool => $user->role === Role::Manager);
         Gate::define("manageHolidays", fn(User $user): bool => $user->role === Role::Manager);
+        Gate::define("manageWorkTimes", fn(User $user): bool => $user->role === Role::Manager);
     }
 }
