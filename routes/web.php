@@ -37,15 +37,14 @@ Route::post("/newLogin", [NewUserLoginController::class, "store"])->name("newLog
 
 Route::get("/forgot-password", [PasswordResetController::class, "create"])->name("password.request");
 Route::post("/forgot-password", [PasswordResetController::class, "store"])->name("password.email");
-Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
-
+Route::get("/reset-password/{token}", [NewPasswordController::class, "create"])->name("password.reset");
+Route::post("/reset-password", [NewPasswordController::class, "store"])->name("password.store");
 
 Route::middleware("auth")->group(function (): void {
     Route::post("/logout", LogoutController::class)->name("logout");
 
-    Route::get("/profile/password", [PasswordUpdateController::class, 'edit'])->name("password.edit");
-    Route::put("/profile/password", [PasswordUpdateController::class, 'update'])->name("password.update");
+    Route::get("/profile/password", [PasswordUpdateController::class, "edit"])->name("password.edit");
+    Route::put("/profile/password", [PasswordUpdateController::class, "update"])->name("password.update");
 
     Route::get("/dashboard", [DashboardController::class, "dashboard"])->name("dashboard");
 

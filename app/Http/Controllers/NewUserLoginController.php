@@ -17,8 +17,8 @@ class NewUserLoginController extends Controller
 {
     public function index(string $email): Response
     {
-        return Inertia::render("Auth/NewUserLogin",[
-            'email' => $email,
+        return Inertia::render("Auth/NewUserLogin", [
+            "email" => $email,
         ]);
     }
 
@@ -27,9 +27,9 @@ class NewUserLoginController extends Controller
      */
     public function store(Request $request, LoginRequest $loginRequest): RedirectResponse
     {
-       $user = User::query()->where('email', $request->get('email'))->first();
+        $user = User::query()->where("email", $request->get("email"))->first();
 
-       $user->update(['password' => Hash::make($request->get('password'))]);
+        $user->update(["password" => Hash::make($request->get("password"))]);
 
         $loginRequest->authenticate();
 

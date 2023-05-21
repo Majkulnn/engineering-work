@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -14,10 +15,7 @@ class UserCreatedMail extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct() {}
 
     /**
      * Get the notification's delivery channels.
@@ -26,7 +24,7 @@ class UserCreatedMail extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ["mail"];
     }
 
     /**
@@ -34,11 +32,11 @@ class UserCreatedMail extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-            ->subject('Account Created')
-                    ->line('Your account has been created')
-                    ->action('Login to Application', url('/newLogin/'.$notifiable->email))
-                    ->line('Thank you for using our application!');
+        return (new MailMessage())
+            ->subject("Account Created")
+            ->line("Your account has been created")
+            ->action("Login to Application", url("/newLogin/" . $notifiable->email))
+            ->line("Thank you for using our application!");
     }
 
     /**
@@ -49,7 +47,6 @@ class UserCreatedMail extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
         ];
     }
 }

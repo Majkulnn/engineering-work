@@ -3,7 +3,7 @@ import { Head, useForm, Link } from '@inertiajs/vue3'
 import TextInput from '@/Components/TextInput.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
-import Checkbox from "@/Components/Checkbox.vue";
+import Checkbox from '@/Components/Checkbox.vue'
 
 defineProps({
   canResetPassword: {
@@ -36,8 +36,8 @@ const submit = () => {
   >
     <div class="p-12 mx-auto rounded-3xl w-96 bg-gradient-to-b from-sky-300 to-white to-25% ">
       <div
-          v-if="status"
-          class="mb-4 font-medium text-md text-green-600"
+        v-if="status"
+        class="mb-4 font-medium text-md text-green-600"
       >
         {{ status }}
       </div>
