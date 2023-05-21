@@ -10,6 +10,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\NewUserLoginController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\PasswordUpdateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkRequestController;
 use App\Http\Controllers\WorkTimeController;
@@ -42,6 +43,9 @@ Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('p
 
 Route::middleware("auth")->group(function (): void {
     Route::post("/logout", LogoutController::class)->name("logout");
+
+    Route::get("/profile/password", [PasswordUpdateController::class, 'edit'])->name("password.edit");
+    Route::put("/profile/password", [PasswordUpdateController::class, 'update'])->name("password.update");
 
     Route::get("/dashboard", [DashboardController::class, "dashboard"])->name("dashboard");
 
