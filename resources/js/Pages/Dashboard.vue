@@ -24,7 +24,7 @@ defineProps({
                   <div class="shrink-0" />
                   <div class="mt-4 text-center sm:pt-1 sm:mt-0 sm:text-left">
                     <p class="text-sm font-medium text-gray-600">
-                      Cześć,
+                      Welcome,
                     </p>
                     <p class="text-xl font-bold text-gray-900 sm:text-2xl">
                       {{ auth.user.email }}
@@ -38,6 +38,11 @@ defineProps({
             </div>
           </div>
         </section>
+        <div>
+          <Link :href="'/profile/password'">
+            Change Password
+          </Link>
+        </div>
         <div>
           <div v-if="auth.can.manageUsers">
             <Link :href="'/users'">
