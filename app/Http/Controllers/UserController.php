@@ -11,8 +11,10 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Profile;
 use App\Models\User;
+use App\Notifications\UserCreatedMail;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -75,7 +77,7 @@ class UserController extends Controller
             "employment_form" => $request->employment_form,
             "employment_date" => $request->employment_date,
         ]);
-
+        Notification::send($user, new UserCreatedMail());
         return redirect()->route("users.index");
     }
 
