@@ -7,6 +7,8 @@ use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\HolidayRequestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\NewPasswordController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkRequestController;
 use App\Http\Controllers\WorkTimeController;
@@ -28,6 +30,12 @@ Route::get("/", fn() => redirect()->route("dashboard"))->middleware("auth")->nam
 
 Route::get("/login", [LoginController::class, "index"])->name("login")->middleware("guest");
 Route::post("/login", [LoginController::class, "store"])->name("login.post");
+
+Route::get("/forgot-password", [PasswordResetController::class, "create"])->name("password.request");
+Route::post("/forgot-password", [PasswordResetController::class, "store"])->name("password.email");
+Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+
 
 Route::middleware("auth")->group(function (): void {
     Route::post("/logout", LogoutController::class)->name("logout");
