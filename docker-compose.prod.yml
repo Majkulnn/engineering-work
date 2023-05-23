@@ -40,8 +40,6 @@ services:
       - POSTGRES_DB=${DOCKER_DB_DATABASE}
       - POSTGRES_USER=${DOCKER_DB_USERNAME}
       - POSTGRES_PASSWORD=${DOCKER_DB_PASSWORD}
-    ports:
-      - ${DOCKER_DB_EXTERNAL_PORT:-5432}:5432
     volumes:
       - Koala-prod-pgsql-data:/var/lib/postgresql/data
     networks:
