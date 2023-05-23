@@ -63,7 +63,7 @@ class HolidaysTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("Holidays/Summary")
-                    ->has("users.data", 11)
+                    ->has("users", 10)
                     ->has("holidays", 10),
             );
     }

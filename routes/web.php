@@ -57,7 +57,7 @@ Route::middleware("auth")->group(function (): void {
     Route::resource("/work/request", WorkRequestController::class)->only(["index", "create", "store"])->names("workRequest");
     Route::resource("/workTime", WorkTimeController::class)->only(["index", "create", "store", "show", "destroy"])->names("workTime");
     Route::put("/workTime/update", [WorkTimeController::class, "update"])->name("workTime.update");
-    Route::get("/workTime/summary", [WorkTimeController::class, "summary"])->name("workTime.summary");
+    Route::get("/workTimes/summary", [WorkTimeController::class, "summary"])->name("workTime.summary");
     Route::get("/workTime/{workTime_id}/coworkers", [WorkTimeController::class, "coworkers"])->name("workTime.coworkers");
     Route::get("/holiday/summary", [HolidayController::class, "summary"])->name("holidays.summary");
 });

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -21,12 +22,9 @@ class PasswordUpdateController extends Controller
         return Inertia::render("Auth/EditPassword");
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request, UpdatePasswordRequest $passwordRequest): RedirectResponse
     {
-        $validated = $request->validate([
-            "current_password" => ["required", "current_password"],
-            "password" => ["required", Password::defaults(), "confirmed"],
-        ]);
+        $validated = $passwordRequest->validated();
 
         $request->user()->update([
             "password" => Hash::make($validated["password"]),

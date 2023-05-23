@@ -13,7 +13,7 @@ async function getData () {
 }
 const combineData = () => {
   const combinedData = reactive({})
-  for (const user of usePage().props.users.data) {
+  for (const user of usePage().props.users) {
     combinedData[user.id] = {
       user,
       workTime: usePage().props.workTime.find((wt) => wt.user_id === user.id)?.total_hours || 0,

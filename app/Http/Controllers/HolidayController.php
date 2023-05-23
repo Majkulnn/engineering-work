@@ -7,8 +7,9 @@ namespace App\Http\Controllers;
 use App\Http\Resources\HolidaysResource;
 use App\Http\Resources\UserResource;
 use App\Models\Holiday;
-use App\Models\Profile;
-use App\Models\User;
+use App\Services\HolidaySummaryService;
+use App\Services\UserService;
+use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -52,21 +53,14 @@ class HolidayController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function summary(Request $request): Response
+    public function summary(Request $request, HolidaySummaryService $holidaySummaryService, UserService $userService): Response
     {
         $this->authorize("manageHolidays");
 
-        $year = $request->get("year") ? $request->get("year") : "2023";
-        $holidays = Holiday::query()
-            ->select("user_id")
-            ->selectRaw('SUM("days_count") as total_days')
-            ->where("start_date", "like", $year . "%")
-            ->groupBy("user_id")
-            ->get();
-        $users = User::query()
-            ->orderBy(Profile::query()->select("last_name")->whereColumn("users.id", "profiles.user_id"))
-            ->paginate()
-            ->withQueryString();
+        $year = $request->get("year") ? $request->get("year") : (string)Carbon::now()->year;
+
+        $holidays = $holidaySummaryService->getHolidays($year);
+        $users = $userService->getUsers();
 
         return Inertia::render("Holidays/Summary", [
             "users" => UserResource::collection($users),

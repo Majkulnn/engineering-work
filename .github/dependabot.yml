@@ -5,7 +5,7 @@ updates:
   - package-ecosystem: composer
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     target-branch: main
     open-pull-requests-limit: 1
     
