@@ -84,7 +84,7 @@ defineProps({
           </div>
           <div v-if="auth.can.manageWorkTimes">
             <Link
-              :href="'/workTime/summary'"
+              :href="'/workTimes/summary'"
               as="button"
               class=""
             >

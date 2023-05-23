@@ -8,8 +8,8 @@ use App\Enums\HolidayRequestStatus;
 use App\Enums\HolidaysType;
 use App\Http\Requests\HolidaysRequestStoreRequest;
 use App\Http\Resources\HolidaysRequestResource;
-use App\Models\Holiday;
 use App\Models\HolidaysRequest;
+use App\Services\AcceptedHolidayRequestService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -74,24 +74,11 @@ class HolidayRequestController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function acceptRequest(int $id): RedirectResponse
+    public function acceptRequest(int $id, AcceptedHolidayRequestService $service): RedirectResponse
     {
         $this->authorize("manageHolidays");
 
-        $holidaysRequest = HolidaysRequest::query()->find($id);
-
-        Holiday::create([
-            "user_id" => $holidaysRequest->creator_id,
-            "start_date" => $holidaysRequest->start_date,
-            "end_date" => $holidaysRequest->end_date,
-            "type" => $holidaysRequest->type,
-            "days_count" => date_diff($holidaysRequest->start_date, $holidaysRequest->end_date)->days + 1,
-        ]);
-        $holidaysRequest->update(
-            [
-                "status" => HolidayRequestStatus::Accepted,
-            ],
-        );
+        $service->accept($id);
 
         return redirect()->route("holidayRequest.index");
     }

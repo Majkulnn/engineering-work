@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkRequestStoreRequest;
-use App\Http\Requests\WorkRequestUpdateRequest;
 use App\Models\WorkRequest;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -41,33 +40,5 @@ class WorkRequestController extends Controller
         ]);
 
         return redirect()->route("dashboard");
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(WorkRequest $workRequest): void
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(WorkRequest $workRequest): void
-    {
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(WorkRequestUpdateRequest $request, WorkRequest $workRequest): void
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(WorkRequest $workRequest): void
-    {
     }
 }

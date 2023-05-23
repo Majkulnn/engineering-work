@@ -12,10 +12,10 @@ use App\Http\Resources\UserResource;
 use App\Models\Profile;
 use App\Models\User;
 use App\Notifications\UserCreatedMail;
+use App\Services\StoreUserService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
@@ -31,8 +31,10 @@ class UserController extends Controller
 
         $users = User::query()
             ->whereNot("role", "administrator")
-            ->orderBy(Profile::query()->select("last_name")->whereColumn("users.id", "profiles.user_id"))
-            ->paginate()->withQueryString();
+            ->orderBy(Profile::query()->select("last_name")
+                ->whereColumn("users.id", "profiles.user_id"))
+            ->paginate()
+            ->withQueryString();
 
         if (auth()->user()->role === Role::Administrator) {
             $users = User::query()
@@ -60,23 +62,12 @@ class UserController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function store(UserStoreRequest $request): RedirectResponse
+    public function store(UserStoreRequest $request, StoreUserService $service): RedirectResponse
     {
         $this->authorize("manageUsers");
 
-        $user = User::create([
-            "email" => $request->email,
-            "password" => Str::password(),
-            "role" => Role::Employee,
-        ]);
+        $user = $service->store($request->validated());
 
-        $user->profile()->create([
-            "first_name" => $request->first_name,
-            "last_name" => $request->last_name,
-            "position" => $request->position,
-            "employment_form" => $request->employment_form,
-            "employment_date" => $request->employment_date,
-        ]);
         Notification::send($user, new UserCreatedMail());
         return redirect()->route("users.index");
     }
