@@ -1,4 +1,5 @@
 <script setup>
+import plLocale from '@fullcalendar/core/locales/pl'
 import FullCalendar from '@fullcalendar/vue3'
 import { Head, Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
@@ -32,6 +33,7 @@ const handleEventClick = (info) => {
 const calendarOptions = reactive({
   schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
   plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin, resourceTimelinePlugin],
+  locale: plLocale,
   initialView: 'dayGridMonth',
   headerToolbar: {
     left: 'prev,next,today',
@@ -49,7 +51,9 @@ const calendarOptions = reactive({
 <template>
   <Head title="List" />
 
-  <AppLayout>
+  <AppLayout
+    :auth="props.auth"
+  >
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
@@ -59,7 +63,7 @@ const calendarOptions = reactive({
               as="button"
               class="rounded-md bg-emerald-500 border-black border"
             >
-              Back
+              Powrót
             </Link>
           </div>
         </div>

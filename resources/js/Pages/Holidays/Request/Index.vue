@@ -7,6 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import multiMonthPlugin from '@fullcalendar/multimonth'
+import plLocale from '@fullcalendar/core/locales/pl'
 import SecondaryButton from '@/Components/SecondaryButton.vue'
 
 const props = defineProps({
@@ -36,6 +37,7 @@ const handleEventClick = (info) => {
 const calendarOptions = reactive({
   schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
   themeSystem: 'standard',
+  locale: plLocale,
   plugins: [dayGridPlugin, interactionPlugin, listPlugin, multiMonthPlugin],
   initialView: 'dayGridMonth',
   headerToolbar: {
@@ -60,17 +62,17 @@ const showCalendar = () => {
 <template>
   <Head title="List" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
-        <div>
+        <div class="flex space-x-5">
           <div>
             <Link
               :href="'/dashboard'"
               as="button"
               class="rounded-md bg-emerald-500 border-black border"
             >
-              Back
+              Powrót
             </Link>
           </div>
           <div v-if="auth.user.role !== 'administrator'">
@@ -79,12 +81,12 @@ const showCalendar = () => {
               as="button"
               class="bg-orange-300"
             >
-              Create Holiday Request
+              Stwórz wiosek o urlop
             </Link>
           </div>
           <div>
             <SecondaryButton @click="showCalendar()">
-              Calendar / Tablelist
+              Kalendarz / Tabela
             </SecondaryButton>
           </div>
         </div>
@@ -119,7 +121,7 @@ const showCalendar = () => {
                   as="button"
                   class="bg-orange-300 rounded-md"
                 >
-                  &nbsp;Accept&nbsp;
+                  &nbsp;Akceptuj&nbsp;
                 </Link>
                 <Link
                   :href="`/holiday/request/${holidayRequest.id}/reject`"
@@ -127,7 +129,7 @@ const showCalendar = () => {
                   as="button"
                   class="bg-red-400 rounded-md"
                 >
-                  &nbsp;Reject&nbsp;
+                  &nbsp;Odrzuć&nbsp;
                 </Link>
               </div>
             </tr>

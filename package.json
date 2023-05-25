@@ -35,6 +35,8 @@
         "@fullcalendar/timegrid": "^6.1.7",
         "@fullcalendar/vue3": "^6.1.7",
         "@headlessui/vue": "^1.7.13",
+        "@heroicons/vue": "^2.0.18",
+        "dayjs": "^1.11.7",
         "momentum-modal": "^0.2.1"
     }
 }

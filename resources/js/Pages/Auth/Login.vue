@@ -29,7 +29,7 @@ const submit = () => {
 </script>
 
 <template>
-  <Head title="Log In" />
+  <Head title="Logowanie" />
 
   <div
     class="relative min-h-screen flex justify-center items-center bg-gray-200"
@@ -44,7 +44,7 @@ const submit = () => {
       <form @submit.prevent="submit">
         <div class="mb-7">
           <h3 class="font-semibold text-2xl text-gray-800">
-            Sign In
+            Logowanie
           </h3>
         </div>
         <div class="space-y-6">
@@ -58,7 +58,7 @@ const submit = () => {
               id="email"
               v-model="form.email"
               type="email"
-              class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+              class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-sky-400"
               placeholder="Email"
               required
               autofocus
@@ -76,13 +76,13 @@ const submit = () => {
           >
             <InputLabel
               for="password"
-              value="Password"
+              value="Hasło"
             />
             <TextInput
               id="password"
               v-model="form.password"
               type="password"
-              class="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
+              class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-sky-400"
               placeholder="Password"
               required
               autocomplete="password"
@@ -99,7 +99,7 @@ const submit = () => {
                 v-model:checked="form.remember"
                 name="remember"
               />
-              <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+              <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Zapamiętaj mnie</span>
             </label>
           </div>
 
@@ -109,15 +109,15 @@ const submit = () => {
               :href="'/forgot-password'"
               class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
             >
-              Forgot your password?
+              Zapomniałeś hasła?
             </Link>
           </div>
           <div>
             <button
               type="submit"
-              class="w-full flex justify-center bg-sky-800 text-white p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
+              class="w-full flex justify-center bg-sky-700 text-white p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
             >
-              Sign in
+              Zaloguj
             </button>
           </div>
         </div>
