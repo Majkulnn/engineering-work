@@ -7,9 +7,9 @@ FROM php:${PHP_VERSION}
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 ARG XDEBUG_VERSION=3.2.0
-ARG INSTALL_XDEBUG=false
+ARG INSTALL_XDEBUG=true
 
-RUN if [ ${INSTALL_XDEBUG} = true ]; then \
+RUN if [ true == true ]; then \
     pecl install xdebug-${XDEBUG_VERSION} \
     && docker-php-ext-enable xdebug \
 ;fi

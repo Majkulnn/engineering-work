@@ -1,4 +1,5 @@
 <script setup>
+import plLocale from '@fullcalendar/core/locales/pl'
 import { Head, Link, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { reactive, ref } from 'vue'
@@ -23,6 +24,7 @@ const calendarOptions = reactive({
   schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
   plugins: [interactionPlugin, dayGridPlugin],
   timeZone: 'UTC',
+  locale: plLocale,
   initialView: 'dayGridMonth',
   firstDay: 1,
   headerToolbar: {
@@ -53,7 +55,7 @@ const calendarOptions = reactive({
 <template>
   <Head title="WorkTime List" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
@@ -63,7 +65,7 @@ const calendarOptions = reactive({
               as="button"
               class="rounded-md bg-emerald-500 border-black border"
             >
-              Back
+              Powrót
             </Link>
           </div>
         </div>

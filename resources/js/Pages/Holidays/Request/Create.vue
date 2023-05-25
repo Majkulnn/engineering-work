@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3'
+import { Head, Link, useForm } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputError from '@/Components/InputError.vue'
@@ -21,13 +21,24 @@ const form = useForm({
 </script>
 
 <template>
-  <Head title="Holiday Request" />
+  <Head title="Wnioski urlopowe" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
-          Crate Request
+          <div>
+            <Link
+              :href="'/dashboard'"
+              as="button"
+              class="rounded-md bg-emerald-500 border-black border"
+            >
+              Powrót
+            </Link>
+          </div>
+        </div>
+        <div>
+          Stwórz wniosek
           <form
             class="max-w-2xl mx-auto"
             method="post"
@@ -36,14 +47,14 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="start_date"
-                value="From"
+                value="Od"
               />
 
               <TextInput
                 id="start_date"
                 v-model="form.start_date"
                 type="date"
-                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
                 required
                 autofocus
                 autocomplete="start_date"
@@ -57,14 +68,14 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="end_date"
-                value="To"
+                value="Do"
               />
 
               <TextInput
                 id="end_date"
                 v-model="form.end_date"
                 type="date"
-                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
                 required
                 autocomplete="end_date"
               />
@@ -77,14 +88,14 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="type"
-                value="Holiday Type"
+                value="Rodzaj urlopu"
               />
 
               <select
                 id="type"
                 v-model="form.type"
                 type="text"
-                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
                 required
                 autocomplete="type"
               >
@@ -101,15 +112,15 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="reason"
-                value="Reason"
+                value="Powód"
               />
 
               <TextInput
                 id="position"
                 v-model="form.reason"
                 type="text"
-                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
-                placeholder="Reason"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
+                placeholder="Powód"
                 autocomplete="reason"
               />
 
@@ -118,9 +129,11 @@ const form = useForm({
                 :message="form.errors.reason"
               />
             </div>
-            <div>
-              <PrimaryButton href="'/users/store'">
-                Create
+            <div class="flex justify-center w-fit">
+              <PrimaryButton
+                class="w-full flex justify-center bg-blue-700 text-white p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
+              >
+                Utórz
               </PrimaryButton>
             </div>
           </form>

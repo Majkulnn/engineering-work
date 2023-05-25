@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3'
+import { Head, Link, useForm } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputError from '@/Components/InputError.vue'
@@ -23,13 +23,24 @@ const form = useForm({
 </script>
 
 <template>
-  <Head title="Dashboard" />
+  <Head title="Pracownicy" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
-          Crate USer
+          <div>
+            <Link
+              :href="'/users'"
+              as="button"
+              class="rounded-md bg-emerald-500 border-black border"
+            >
+              Powrót
+            </Link>
+          </div>
+        </div>
+        <div>
+          Stwórz konto pracownika
           <form
             class="max-w-2xl mx-auto"
             method="post"
@@ -60,7 +71,7 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="first_name"
-                value="First Name"
+                value="Imię"
               />
 
               <TextInput
@@ -81,7 +92,7 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="last_name"
-                value="Last Name"
+                value="Naswisko"
               />
 
               <TextInput
@@ -102,7 +113,7 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="position"
-                value="Position"
+                value="Stanowisko"
               />
 
               <TextInput
@@ -123,7 +134,7 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="employment_form"
-                value="Employment Form"
+                value="Forma zatrudnienia"
               />
 
               <select
@@ -146,7 +157,7 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="employment_date"
-                value="Employment Date"
+                value="Data zatrudnienia"
               />
 
               <TextInput
@@ -164,7 +175,7 @@ const form = useForm({
             </div>
             <div>
               <PrimaryButton href="'/users/store'">
-                Create
+                Utwórz
               </PrimaryButton>
             </div>
           </form>

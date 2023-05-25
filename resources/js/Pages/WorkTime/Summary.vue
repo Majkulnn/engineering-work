@@ -33,7 +33,7 @@ defineProps({
 <template>
   <Head title="Hours Schedule" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
@@ -43,7 +43,7 @@ defineProps({
               as="button"
               class="rounded-md bg-emerald-500 border-black border"
             >
-              Back
+              Powrót
             </Link>
           </div>
         </div>
@@ -55,7 +55,7 @@ defineProps({
             @change="getData()"
           />
           <div>
-            <p>Data for {{ month? month: 'May' }}:</p>
+            <p>Dane dla {{ month? month: 'Maj-2023' }}:</p>
           </div>
         </div>
         <div>
@@ -64,9 +64,6 @@ defineProps({
               v-for="(user, index) in combineData()"
               :key="index"
             >
-              <td>
-                {{ user.user.id }}
-              </td>
               <td>
                 {{ user.user.last_name }}
               </td>

@@ -13,8 +13,8 @@ defineProps({
 <template>
   <Head title="Dashboard" />
 
-  <AppLayout>
-    <div class="max-w-7xl mx-auto py-4">
+  <AppLayout :auth="auth">
+    <div class="sm:max-w-7xl w-full mx-auto h-full my-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <section>
           <div class=" overflow-hidden bg-white shadow">
@@ -24,7 +24,7 @@ defineProps({
                   <div class="shrink-0" />
                   <div class="mt-4 text-center sm:pt-1 sm:mt-0 sm:text-left">
                     <p class="text-sm font-medium text-gray-600">
-                      Welcome,
+                      Witaj,
                     </p>
                     <p class="text-xl font-bold text-gray-900 sm:text-2xl">
                       {{ auth.user.email }}
@@ -38,87 +38,62 @@ defineProps({
             </div>
           </div>
         </section>
-        <div>
-          <Link :href="'/profile/password'">
-            Change Password
-          </Link>
-        </div>
-        <div>
-          <div v-if="auth.can.manageUsers">
-            <Link :href="'/users'">
-              Manage Users
-            </Link>
+        <div class="md:flex w-5/6 mx-auto mt-auto pt-5 space-y-5">
+          <div class="md:w-1/3 m-auto flex flex-col mx-auto space-y-5">
+            <div class="bg-orange-200 border-2 border-orange-500">
+              Następna zmiana w pracy
+              <div v-if="nextWork">
+                <span>{{ nextWork.date }}</span><br>
+                <span>{{ nextWork.start }} - {{ nextWork.end }}</span>
+              </div>
+              <div v-else>
+                Nie posiadasz zmian w najbliższym czasie
+              </div>
+            </div>
+            <div class="bg-orange-200 border-2 border-orange-500">
+              Następe Wakacje
+              <div v-if="nextHoliday">
+                <span>{{ nextHoliday.start_date }}</span><br>
+                <span>{{ nextHoliday.type }}</span>
+              </div>
+              <div v-else>
+                Nie masz zaplanowanych wakacji w najbliższym czasie
+              </div>
+            </div>
           </div>
-          <div>
-            <Link :href="'/holiday/request'">
-              Manage Holidays Requests
-            </Link>
-          </div>
-          <div v-if="auth.can.manageHolidays">
-            <Link :href="'/holidays'">
-              Manage Holidays
-            </Link>
-          </div>
-          <div v-if="auth.can.manageHolidays">
-            <Link :href="'/holiday/summary'">
-              Holidays Summary
-            </Link>
-          </div>
-          <div>
+          <div class="md:w-2/3 flex flex-col mx-auto text-xl space-y-1">
             <Link
-              :href="'/work/request/create'"
+              v-if="auth.can.manageUsers"
               as="button"
-              class="bg-amber-300"
+              :href="'/users'"
+              class="w-1/2 mx-auto ring-1 shadow-sky-400 shadow-lg hover:bg-sky-400"
             >
-              Create Work Request
+              Pracownicy
             </Link>
-          </div>
-          <div v-if="auth.can.manageWorkTimes">
             <Link
+              v-if="auth.can.manageHolidays"
+              as="button"
+              class="w-1/2 mx-auto ring-1 shadow-sky-400 shadow-lg hover:bg-sky-400"
+              :href="'/holiday/summary'"
+            >
+              Podsumowanie Urlopów
+            </Link>
+            <Link
+              v-if="auth.can.manageWorkTimes"
               :href="'/workTime/create'"
               as="button"
-              class=""
+              class="w-1/2 mx-auto ring-1 shadow-sky-400 hover:bg-sky-400 shadow-lg"
             >
-              Manage Work
+              Zarządzaj czasem pracy
             </Link>
-          </div>
-          <div v-if="auth.can.manageWorkTimes">
             <Link
+              v-if="auth.can.manageWorkTimes"
               :href="'/workTimes/summary'"
               as="button"
-              class=""
+              class="w-1/2 mx-auto ring-1 shadow-sky-400 hover:bg-sky-400 shadow-lg"
             >
-              Work Time Summary
+              Podsumowanie czasu pracy
             </Link>
-          </div>
-          <div>
-            <Link
-              :href="'/workTime'"
-              as="button"
-              class=""
-            >
-              Work Schedule
-            </Link>
-          </div>
-          <div class="bg-orange-200 h-1/6 w-2/6 border-2 border-black">
-            Next Working Hour
-            <div v-if="nextWork">
-              <span>{{ nextWork.date }}</span><br>
-              <span>{{ nextWork.start }} - {{ nextWork.end }}</span>
-            </div>
-            <div v-else>
-              There is not work anytime soon
-            </div>
-          </div>
-          <div class="bg-orange-200 h-1/6 w-2/6 border-2 border-orange-500">
-            Next Holiday
-            <div v-if="nextHoliday">
-              <span>{{ nextHoliday.start_date }}</span><br>
-              <span>{{ nextHoliday.type }}</span>
-            </div>
-            <div v-else>
-              There is not vacation anytime soon
-            </div>
           </div>
         </div>
       </div>

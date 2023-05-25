@@ -10,24 +10,40 @@ defineProps({
 </script>
 
 <template>
-  <Head title="Dashboard" />
+  <Head title="Pracownicy" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
+          <div>
+            <Link
+              :href="'/dashboard'"
+              as="button"
+              class="rounded-md bg-emerald-500 border-black border"
+            >
+              Powrót
+            </Link>
+          </div>
           <div v-if="auth.can.manageUsers">
             <Link
               :href="'/users/create'"
               as="button"
               class="rounded-md bg-emerald-500 border-black border"
             >
-              Create Employee
+              Stwórz konto pracownika
             </Link>
           </div>
         </div>
         <div>
           <table class="border-2">
+            <thead>
+              <td>Nazwisko</td>
+              <td>email</td>
+              <td>rola</td>
+              <td>stanowisko</td>
+              <td>rodzaj zatrudnienia</td>
+            </thead>
             <tr v-for="user in users.data">
               <td>
                 {{ user.last_name }}
@@ -51,7 +67,7 @@ defineProps({
                   as="button"
                   class="bg-orange-300 rounded-md"
                 >
-                  &nbsp;Show&nbsp;
+                  &nbsp;Szczegóły&nbsp;
                 </Link>
                 <Link
                   :href="`/users/${user.id}`"
@@ -59,7 +75,7 @@ defineProps({
                   as="button"
                   class="bg-red-400 rounded-md"
                 >
-                  &nbsp;Delete&nbsp;
+                  &nbsp;Usuń&nbsp;
                 </Link>
               </div>
             </tr>

@@ -7,6 +7,10 @@ import { Head, useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
+defineProps({
+  auth: Object,
+})
+
 const passwordInput = ref(null)
 const currentPasswordInput = ref(null)
 
@@ -37,12 +41,12 @@ const updatePassword = () => {
 <template>
   <Head title="Forgot Password" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <header>
           <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            Update Password
+            Zmiana Hasła
           </h2>
 
           <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -57,7 +61,7 @@ const updatePassword = () => {
             <div>
               <InputLabel
                 for="current_password"
-                value="Current Password"
+                value="Stare hasło"
               />
 
               <TextInput
@@ -78,7 +82,7 @@ const updatePassword = () => {
             <div>
               <InputLabel
                 for="password"
-                value="New Password"
+                value="Nowe hasło"
               />
 
               <TextInput
@@ -99,7 +103,7 @@ const updatePassword = () => {
             <div>
               <InputLabel
                 for="password_confirmation"
-                value="Confirm Password"
+                value="Potwierdz nowe hasło"
               />
 
               <TextInput
@@ -118,7 +122,7 @@ const updatePassword = () => {
 
             <div class="flex items-center gap-4">
               <PrimaryButton :disabled="form.processing">
-                Save
+                Zapisz
               </PrimaryButton>
 
               <Transition

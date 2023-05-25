@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/vue3'
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputError from '@/Components/InputError.vue'
@@ -20,11 +20,22 @@ const form = useForm(usePage().props.user)
 <template>
   <Head title="Dashboard" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
-          User Profile
+          <div>
+            <Link
+              :href="'/dashboard'"
+              as="button"
+              class="rounded-md bg-emerald-500 border-black border"
+            >
+              Powrót
+            </Link>
+          </div>
+        </div>
+        <div>
+          Profil Pracowika
           <form
             class="max-w-2xl mx-auto"
             method="put"

@@ -14,13 +14,24 @@ defineProps({
 <template>
   <Head title="Dashboard" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
-          User Profile
+          <div>
+            <Link
+              :href="'/dashboard'"
+              as="button"
+              class="rounded-md bg-emerald-500 border-black border"
+            >
+              Powrót
+            </Link>
+          </div>
+        </div>
+        <div>
+          Profil Pracownika
           <div class="max-w-2xl mx-auto">
-            <InputLabel value="First Name" />
+            <InputLabel value="Imię" />
             <TextInput
               id="first_name"
               v-model="user.first_name"
@@ -30,7 +41,7 @@ defineProps({
             />
           </div>
           <div class="max-w-2xl mx-auto">
-            <InputLabel value="Last Name" />
+            <InputLabel value="Nazwisko" />
             <TextInput
               id="last_name"
               v-model="user.last_name"
@@ -63,7 +74,7 @@ defineProps({
             />
           </div>
           <div class="max-w-2xl mx-auto">
-            <InputLabel value="Position" />
+            <InputLabel value="Stanowisko" />
             <TextInput
               id="position"
               v-model="user.position"
@@ -73,7 +84,7 @@ defineProps({
             />
           </div>
           <div class="max-w-2xl mx-auto">
-            <InputLabel value="Employment Form" />
+            <InputLabel value="Froma zatrudnienia" />
             <TextInput
               id="employment_form"
               v-model="user.employment_form"
@@ -83,7 +94,7 @@ defineProps({
             />
           </div>
           <div class="max-w-2xl mx-auto">
-            <InputLabel value="Employment Date" />
+            <InputLabel value="Data zatrudnienia" />
             <TextInput
               id="employment_date"
               v-model="user.employment_date"
@@ -100,7 +111,7 @@ defineProps({
               :href="`/users/${user.id}/edit`"
             >
               &nbsp;
-              Edit
+              Edytuj
               &nbsp;
             </Link>
           </div>

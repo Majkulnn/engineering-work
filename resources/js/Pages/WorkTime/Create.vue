@@ -5,6 +5,7 @@ import { onMounted, reactive, ref, watch } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import interactionPlugin from '@fullcalendar/interaction'
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
+import plLocale from '@fullcalendar/core/locales/pl'
 
 const props = defineProps({
   auth: Object,
@@ -78,6 +79,7 @@ const calendarOptions = reactive({
   schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
   plugins: [interactionPlugin, resourceTimelinePlugin],
   timeZone: 'UTC',
+  locale: plLocale,
   initialView: 'resourceTimeline',
   headerToolbar: {
     left: 'prev,next today',
@@ -111,7 +113,7 @@ const calendarOptions = reactive({
 <template>
   <Head title="WorkTime List" />
 
-  <AppLayout>
+  <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>

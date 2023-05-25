@@ -1,11 +1,10 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3'
+import { Head, Link, useForm } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
-
 defineProps({
   auth: Object,
 })
@@ -15,33 +14,43 @@ const form = useForm({
   from: '',
   to: '',
 })
-
 </script>
 
 <template>
-  <Head title="Work Request" />
+  <Head title="Preferencje czasu pracy" />
 
-  <AppLayout>
-    <div class="max-w-7xl mx-auto py-4">
-      <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
+  <AppLayout :auth="auth">
+    <div class="max-w-7xl h-full mx-auto py-4">
+      <div class="mt-6 max-w-full h-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
         <div>
-          Crate Request
+          <div>
+            <Link
+              :href="'/dashboard'"
+              as="button"
+              class="rounded-md bg-emerald-500 border-black border"
+            >
+              Powrót
+            </Link>
+          </div>
+        </div>
+        <div class="w-fit mx-auto">
+          Stwórz preferencję pracy
           <form
-            class="max-w-2xl mx-auto"
+            class="max-w-2xl w-fit mx-auto space-y-5"
             method="post"
             @submit.prevent="form.post('/work/request')"
           >
-            <div class="">
+            <div class="mx-auto">
               <InputLabel
                 for="date"
-                value="Date"
+                value="Data"
               />
 
               <TextInput
                 id="date"
                 v-model="form.date"
                 type="date"
-                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
                 required
                 autofocus
                 autocomplete="date"
@@ -62,7 +71,7 @@ const form = useForm({
                 id="from"
                 v-model="form.from"
                 type="time"
-                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
                 required
                 autocomplete="from"
               />
@@ -82,7 +91,7 @@ const form = useForm({
                 id="to"
                 v-model="form.to"
                 type="time"
-                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                class="w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
                 required
                 autocomplete="to"
               />
@@ -93,8 +102,10 @@ const form = useForm({
               />
             </div>
             <div>
-              <PrimaryButton>
-                Create
+              <PrimaryButton
+                class="w-full flex justify-center bg-blue-700 text-white p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
+              >
+                Utwórz
               </PrimaryButton>
             </div>
           </form>
