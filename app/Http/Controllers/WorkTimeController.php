@@ -64,8 +64,8 @@ class WorkTimeController extends Controller
             "user_id" => $request->user_id,
             "start" => $request->start,
             "end" => $request->end,
+            "position" => $request->position,
             "hour_count" => Carbon::parse($request->end)->diff(Carbon::parse($request->start))->format("%H:%I:%S"),
-            "position" => $request->posiiton,
         ]);
 
         return back();
