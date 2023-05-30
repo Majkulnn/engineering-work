@@ -58,6 +58,9 @@ const calendarOptions = reactive({
   <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
+        <h1 class="text-center text-3xl font-bold">
+          Grafik Pracy
+        </h1>
         <div>
           <div>
             <Link

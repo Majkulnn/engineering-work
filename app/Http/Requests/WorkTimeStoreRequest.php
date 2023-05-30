@@ -27,7 +27,7 @@ class WorkTimeStoreRequest extends FormRequest
             "user_id" => ["required"],
             "start" => ["required"],
             "end" => ["required", "after:start"],
-            "position" => ["required"],
+            "position" => ["required", "string"],
         ];
     }
 }

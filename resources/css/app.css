@@ -1,4 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind variants
+@tailwind variants;
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: light;
+    }
+}

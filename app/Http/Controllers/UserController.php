@@ -33,13 +33,12 @@ class UserController extends Controller
             ->whereNot("role", "administrator")
             ->orderBy(Profile::query()->select("last_name")
                 ->whereColumn("users.id", "profiles.user_id"))
-            ->paginate()
-            ->withQueryString();
+            ->get();
 
         if (auth()->user()->role === Role::Administrator) {
             $users = User::query()
                 ->orderBy(Profile::query()->select("last_name")->whereColumn("users.id", "profiles.user_id"))
-                ->paginate()->withQueryString();
+                ->get();
         }
 
         return Inertia::render("User/List", [

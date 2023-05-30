@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "based/momentum-modal": "^0.2.0",
+        "enlightn/security-checker": "^1.10",
         "guzzlehttp/guzzle": "^7.5",
         "inertiajs/inertia-laravel": "^0.6.8",
         "laravel/framework": "^10.4.1",
@@ -15,9 +16,11 @@
     },
     "require-dev": {
         "blumilksoftware/codestyle": "^2.1",
+        "brianium/paratest": "^7.1",
         "fakerphp/faker": "^1.21.0",
         "mockery/mockery": "^1.5.1",
         "nunomaduro/collision": "^7.2",
+        "phpunit/php-code-coverage": "^10.1",
         "phpunit/phpunit": "^10.0.16",
         "spatie/laravel-ignition": "^2.0"
     },

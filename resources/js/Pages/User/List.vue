@@ -44,7 +44,7 @@ defineProps({
               <td>stanowisko</td>
               <td>rodzaj zatrudnienia</td>
             </thead>
-            <tr v-for="user in users.data">
+            <tr v-for="user in users">
               <td>
                 {{ user.last_name }}
               </td>
