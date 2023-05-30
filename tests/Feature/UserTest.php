@@ -40,7 +40,7 @@ class UserTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("User/List")
-                    ->has("users.data", 11),
+                    ->has("users", 11),
             );
     }
 
@@ -56,7 +56,7 @@ class UserTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("User/List")
-                    ->has("users.data", 11),
+                    ->has("users", 11),
             );
     }
 
@@ -73,7 +73,7 @@ class UserTest extends FeatureTestCase
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component("User/List")
-                    ->has("users.data", 11),
+                    ->has("users", 11),
             );
     }
 

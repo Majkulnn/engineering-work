@@ -60,11 +60,14 @@ const showCalendar = () => {
 </script>
 
 <template>
-  <Head title="List" />
+  <Head title="Wnioski urlopowe" />
 
   <AppLayout :auth="auth">
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
+        <h1 class="text-center text-3xl font-bold">
+          Wnioski urlopowe
+        </h1>
         <div class="flex space-x-5">
           <div>
             <Link

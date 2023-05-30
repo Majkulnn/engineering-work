@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, Link, router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
 import { Modal } from 'momentum-modal'
 import {
   Dialog,
@@ -16,7 +16,7 @@ import {
 } from '@heroicons/vue/24/outline'
 import { ref } from 'vue'
 
-const props = defineProps({
+defineProps({
   auth: Object,
 })
 const mobileMenuOpen = ref(false)

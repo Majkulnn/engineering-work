@@ -64,7 +64,7 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="from"
-                value="From"
+                value="Godzina rozpoczęcia"
               />
 
               <TextInput
@@ -84,7 +84,7 @@ const form = useForm({
             <div class="">
               <InputLabel
                 for="to"
-                value="To"
+                value="Godzina Zakończenia"
               />
 
               <TextInput

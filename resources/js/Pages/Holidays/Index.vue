@@ -49,13 +49,16 @@ const calendarOptions = reactive({
 </script>
 
 <template>
-  <Head title="List" />
+  <Head title="Urlopy" />
 
   <AppLayout
     :auth="props.auth"
   >
     <div class="max-w-7xl mx-auto py-4">
       <div class="mt-6 max-w-full mx-auto bg-sky-300 shadow-lg rounded-lg p-6">
+        <h1 class="text-center text-3xl font-bold">
+          Urlopy pracownicze
+        </h1>
         <div>
           <div>
             <Link
